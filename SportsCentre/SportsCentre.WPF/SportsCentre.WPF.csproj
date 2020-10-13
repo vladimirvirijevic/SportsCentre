@@ -11,9 +11,4 @@
     <ProjectReference Include="..\SportsCentre.Domain\SportsCentre.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
-
 </Project>

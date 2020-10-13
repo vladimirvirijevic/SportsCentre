@@ -1,9 +1,24 @@
 ﻿<Application x:Class="SportsCentre.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SportsCentre.WPF"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewModels="clr-namespace:SportsCentre.WPF.ViewModels"
+             xmlns:views="clr-namespace:SportsCentre.WPF.Views"
+             xmlns:local="clr-namespace:SportsCentre.WPF">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Common.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
+                <views:HomeView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CentresViewModel}">
+                <views:CentresView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CourtsViewModel}">
+                <views:Courts />
+            </DataTemplate>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
