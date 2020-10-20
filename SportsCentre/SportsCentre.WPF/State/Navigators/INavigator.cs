@@ -8,10 +8,8 @@ namespace SportsCentre.WPF.State.Navigators
 {
     public enum ViewType
     {
-        Home,
         Centres,
-        Courts,
-        Matches
+        Courts
     }
 
     public interface INavigator

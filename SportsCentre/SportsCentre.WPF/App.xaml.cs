@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.State.Navigators;
+using SportsCentre.WPF.ViewModels.Factories;
 
 namespace SportsCentre.WPF
 {
@@ -35,6 +36,10 @@ namespace SportsCentre.WPF
             IServiceCollection services = new ServiceCollection();
 
             services.AddSingleton<ICentreService, CentreService>();
+
+            services.AddSingleton<ISportsCentreViewModelAbstractFactory, SportsCentreViewModelAbstractFactory>();
+            services.AddSingleton<ISportsCentreViewModelFactory<CentresViewModel>, CentreViewModelFactory>();
+            services.AddSingleton<ISportsCentreViewModelFactory<CourtsViewModel>, CourtsViewModelFactory>(); 
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<MainViewModel>();
