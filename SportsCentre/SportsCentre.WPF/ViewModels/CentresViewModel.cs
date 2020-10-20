@@ -84,6 +84,7 @@ namespace SportsCentre.WPF.ViewModels
 
         #region Commands
         public ICommand AddCenterCommand { get; set; }
+        public ICommand DeleteCentreCommand { get; set; }
         #endregion
 
 
@@ -93,6 +94,7 @@ namespace SportsCentre.WPF.ViewModels
             _centreService = centreService;
 
             AddCenterCommand = new RelayCommand(new Action<object>(AddCentre));
+            DeleteCentreCommand = new RelayCommand(new Action<object>(DeleteCentre));
             MessageText = "";
 
             Name = "";
@@ -147,6 +149,31 @@ namespace SportsCentre.WPF.ViewModels
                     ((TextBlock)obj).Foreground = Brushes.Red;
                 }
             }
+        }
+
+        private void DeleteCentre(object obj)
+        {
+            MessageText = "";
+            ListView gridView = (ListView)obj;
+
+            if (gridView.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            int id = ((Centre)gridView.SelectedItems[0]).Id;
+
+            bool result = _centreService.Delete(id);
+
+            if (!result)
+            {
+                MessageText = "Can`t delete centre with courts";
+                return;
+            }
+
+            GetCentres();
+
+            MessageText = "Centre deleted successfully!";
         }
 
         private void GetCentres()

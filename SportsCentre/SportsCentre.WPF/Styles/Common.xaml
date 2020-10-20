@@ -38,6 +38,33 @@
 
     </Style>
 
+    <Style x:Key="ButtonDanger" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Helvetica"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Padding" Value="0, 5"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Red" BorderThickness="1">
+                        <ContentPresenter Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!-- Style triggers za hover buttona-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
     <Style TargetType="TextBox">
         <Setter Property="Padding" Value="5"/>
         <Setter Property="FontSize" Value="14"/>

@@ -7,5 +7,6 @@ namespace SportsCentre.Domain.Interfaces
     {
         List<Centre> GetAll();
         Centre Add(Centre centre);
+        bool Delete(int id);
     }
 }

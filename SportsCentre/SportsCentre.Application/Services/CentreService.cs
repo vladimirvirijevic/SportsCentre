@@ -28,6 +28,22 @@ namespace SportsCentre.Services
             return result.Entity;
         }
 
+        public bool Delete(int id)
+        {
+            try
+            {
+                var centre = _context.Centres.Find(id);
+                _context.Centres.Remove(centre);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public List<Centre> GetAll()
         {
             List<Centre> centres = _context.Centres.ToList();
