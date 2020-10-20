@@ -3,7 +3,9 @@ using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -19,6 +21,7 @@ namespace SportsCentre.WPF.ViewModels
         private string country;
         private string city;
         private string address;
+        private ObservableCollection<Centre> centres = new ObservableCollection<Centre>();
 
         #endregion
 
@@ -68,6 +71,15 @@ namespace SportsCentre.WPF.ViewModels
                 OnPropertyChanged("Address");
             }
         }
+        public ObservableCollection<Centre> Centres
+        {
+            get { return centres; }
+            set
+            {
+                centres = value;
+                OnPropertyChanged("Centres");
+            }
+        }
         #endregion
 
         #region Commands
@@ -87,6 +99,8 @@ namespace SportsCentre.WPF.ViewModels
             Country = "";
             City = "";
             Address = "";
+
+            GetCentres();
         }
 
         private void AddCentre(object obj)
@@ -123,6 +137,7 @@ namespace SportsCentre.WPF.ViewModels
                     ((TextBlock)obj).Foreground = Brushes.Green;
                 }
                 MessageText = "Sports Center Successfully Added!";
+                GetCentres();
             }
             catch (Exception)
             {
@@ -132,6 +147,14 @@ namespace SportsCentre.WPF.ViewModels
                     ((TextBlock)obj).Foreground = Brushes.Red;
                 }
             }
+        }
+
+        private void GetCentres()
+        {
+            centres.Clear();
+            var centersList = _centreService.GetAll();
+
+            centersList.ForEach(c => centres.Add(c));
         }
     }
 }

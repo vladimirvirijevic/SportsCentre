@@ -1,8 +1,10 @@
-﻿using SportsCentre.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SportsCentre.Data;
 using SportsCentre.Domain.Interfaces;
 using SportsCentre.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,25 +12,27 @@ namespace SportsCentre.Services
 {
     public class CentreService : ICentreService
     {
-        SportsCentreDbContext context;
+        private SportsCentreDbContext _context;
 
         public CentreService()
         {
-            context = new SportsCentreDbContext();
+            _context = new SportsCentreDbContext();
         }
 
-        public async Task<Centre> Add(Centre centre)
+        public Centre Add(Centre centre)
         {
-            var result = await context.Centres.AddAsync(centre);
+            var result = _context.Centres.Add(centre);
 
-            await context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return result.Entity;
         }
 
-        public Task<List<Centre>> GetAll()
+        public List<Centre> GetAll()
         {
-            throw new NotImplementedException();
+            List<Centre> centres = _context.Centres.ToList();
+
+            return centres;
         }
     }
 }

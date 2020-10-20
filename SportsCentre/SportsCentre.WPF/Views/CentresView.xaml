@@ -45,5 +45,23 @@
                 <Button CommandParameter="{Binding ElementName=messageText}" Command="{Binding AddCenterCommand}" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Left" Margin="0 20 0 0" Content="Add" />
             </StackPanel>
         </Border>
+        <Border Grid.Column="1" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ListView  Margin="20" x:Name="centreList" Grid.Row="1" ItemsSource="{Binding Centres}" >
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"  Width="100"/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  Width="100" />
+                            <GridViewColumn Header="Country" DisplayMemberBinding="{Binding Country}"  Width="100" />
+                            <GridViewColumn Header="City" DisplayMemberBinding="{Binding City}"  Width="100" />
+                            <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}"  Width="200" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
