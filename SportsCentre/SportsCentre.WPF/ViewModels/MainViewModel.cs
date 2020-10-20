@@ -15,6 +15,8 @@ namespace SportsCentre.WPF.ViewModels
         {
             Navigator = navigator;
             _centreService = centreService;
+
+            Navigator.UpdateCurrentViewModelCommand.Execute(ViewType.Centres);
         }
     }
 }

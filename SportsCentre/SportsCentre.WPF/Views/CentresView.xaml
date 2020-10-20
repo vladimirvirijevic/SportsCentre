@@ -5,8 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SportsCentre.WPF.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="700" d:DesignWidth="1000">
     <Grid>
-        <TextBlock Text="Centres"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Padding="20" BorderBrush="Black" Margin="10">
+            <StackPanel Grid.Column="0" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
+                               Foreground="Green"
+                               FontSize="15"
+                               FontWeight="Bold"/>
+                    <StackPanel Margin="0 0 0 5" Grid.Row="1">
+                        <Label Content="Name"/>
+                        <TextBox Text="{Binding Name}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 5" Grid.Row="2">
+                        <Label Content="Country"/>
+                        <TextBox Text="{Binding Country}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 15" Grid.Row="3">
+                        <Label Content="City"/>
+                        <TextBox Text="{Binding City}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 15" Grid.Row="4">
+                        <Label Content="Address"/>
+                        <TextBox Text="{Binding Address}"/>
+                    </StackPanel>
+                </Grid>
+                <Button CommandParameter="{Binding ElementName=messageText}" Command="{Binding AddCenterCommand}" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Left" Margin="0 20 0 0" Content="Add" />
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

@@ -27,7 +27,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <RadioButton Grid.Column="1" Content="Sports Centre" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Centres}"/>
+            <RadioButton Grid.Column="1" Content="Sports Centre" 
+                         
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Centres}"/>
             <RadioButton Grid.Column="2" Content="Courts" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Courts}"/>
         </Grid>
     </Grid>

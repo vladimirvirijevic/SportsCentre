@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:SportsCentre.WPF.Controls"
         
         mc:Ignorable="d"
-        Title="Sports Centre" Height="450" Width="800">
+        Title="Sports Centre" Height="700" Width="1000">
     <Grid>
         
         <Grid.RowDefinitions>

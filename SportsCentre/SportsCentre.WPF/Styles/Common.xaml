@@ -11,4 +11,42 @@
     <SolidColorBrush x:Key="BrushPrimaryDark" Color="{StaticResource ColorPrimaryDark}"/>
     <SolidColorBrush x:Key="BrushPrimaryDarker" Color="{StaticResource ColorPrimaryDarker}"/>
 
+    <Style x:Key="ButtonPrimary" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Helvetica"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Padding" Value="0, 5"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Cursor" Value="Hand"/>
+
+        <Setter Property="Background" Value="{StaticResource BrushPrimary}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{StaticResource BrushPrimary}" BorderThickness="1">
+                        <ContentPresenter Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!-- Style triggers za hover buttona-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BrushPrimaryDark}"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <Style TargetType="TextBox">
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Helvetica"/>
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontFamily" Value="Helvetica"/>
+    </Style>
+
 </ResourceDictionary>
