@@ -13,9 +13,12 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Sports Centre" Background="{StaticResource BrushPrimary}"/>
+        <TextBlock Grid.Row="0" Padding="10" FontSize="28" Foreground="White" Text="Sports Centre" Background="{StaticResource BrushPrimary}"/>
 
         <Grid Grid.Row="1" Background="{StaticResource BrushPrimaryDark}">
+            <Grid.Resources>
+                <Style TargetType="RadioButton" BasedOn="{StaticResource NavButton}"/>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>

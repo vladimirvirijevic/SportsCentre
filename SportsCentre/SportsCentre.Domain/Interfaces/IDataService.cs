@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportsCentre.Domain.Services
+namespace SportsCentre.Domain.Interfaces
 {
     public interface IDataService<T>
     {

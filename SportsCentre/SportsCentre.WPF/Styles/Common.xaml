@@ -4,9 +4,11 @@
     <!--Colors-->
     <Color x:Key="ColorPrimary">#5e5ec5</Color>
     <Color x:Key="ColorPrimaryDark">#464694</Color>
+    <Color x:Key="ColorPrimaryDarker">#1E1E6A</Color>
     
     <!--Brushes-->
     <SolidColorBrush x:Key="BrushPrimary" Color="{StaticResource ColorPrimary}"/>
     <SolidColorBrush x:Key="BrushPrimaryDark" Color="{StaticResource ColorPrimaryDark}"/>
+    <SolidColorBrush x:Key="BrushPrimaryDarker" Color="{StaticResource ColorPrimaryDarker}"/>
 
 </ResourceDictionary>
