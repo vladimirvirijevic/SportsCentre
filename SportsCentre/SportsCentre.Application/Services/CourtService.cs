@@ -6,22 +6,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SportsCentre.Services
 {
-    public class CentreService : ICentreService
+    public class CourtService : ICourtService
     {
         private SportsCentreDbContext _context;
 
-        public CentreService()
+        public CourtService()
         {
             _context = new SportsCentreDbContext();
         }
 
-        public Centre Add(Centre centre)
+        public Court Add(Court court)
         {
-            var result = _context.Centres.Add(centre);
+            _context.Attach(court.Centre);
+            var result = _context.Courts.Add(court);
 
             _context.SaveChanges();
 
@@ -32,8 +32,8 @@ namespace SportsCentre.Services
         {
             try
             {
-                var centre = _context.Centres.Find(id);
-                _context.Centres.Remove(centre);
+                var entity = _context.Courts.Find(id);
+                _context.Courts.Remove(entity);
                 _context.SaveChanges();
             }
             catch (Exception ex)
@@ -44,16 +44,11 @@ namespace SportsCentre.Services
             return true;
         }
 
-        public Centre Get(int id)
+        public List<Court> GetAll()
         {
-            return _context.Centres.Find(id);
-        }
+            List<Court> entities = _context.Courts.Include(court => court.Centre).ToList();
 
-        public List<Centre> GetAll()
-        {
-            List<Centre> centres = _context.Centres.ToList();
-
-            return centres;
+            return entities;
         }
     }
 }

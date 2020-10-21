@@ -17,6 +17,7 @@ namespace SportsCentre.WPF.ViewModels
         #region Private Properties
         private readonly ICentreService _centreService;
         private string messageText;
+        private string messageForeground;
         private string name;
         private string country;
         private string city;
@@ -33,6 +34,15 @@ namespace SportsCentre.WPF.ViewModels
             {
                 messageText = value;
                 OnPropertyChanged("MessageText");
+            }
+        }
+        public string MessageForeground
+        {
+            get { return messageForeground; }
+            set
+            {
+                messageForeground = value;
+                OnPropertyChanged("MessageForeground");
             }
         }
         public string Name
@@ -101,7 +111,7 @@ namespace SportsCentre.WPF.ViewModels
             Country = "";
             City = "";
             Address = "";
-
+            MessageForeground = "Green";
             GetCentres();
         }
 
@@ -109,13 +119,9 @@ namespace SportsCentre.WPF.ViewModels
         {
             if (Country == "" || City == "" || Address == "" || Name == "")
             {
+                MessageForeground = "Red";
                 MessageText = "All fields are required!";
-
-                if ((TextBlock)obj != null)
-                {
-                    ((TextBlock)obj).Foreground = Brushes.Red;
-                    return;
-                }
+                return;
             }
 
             var center = new Centre
@@ -134,20 +140,14 @@ namespace SportsCentre.WPF.ViewModels
                 Address = "";
                 Name = "";
 
-                if ((TextBlock)obj != null)
-                {
-                    ((TextBlock)obj).Foreground = Brushes.Green;
-                }
+                MessageForeground = "Green";
                 MessageText = "Sports Center Successfully Added!";
                 GetCentres();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                if ((TextBlock)obj != null)
-                {
-                    MessageText = "There was an error!";
-                    ((TextBlock)obj).Foreground = Brushes.Red;
-                }
+                MessageForeground = "Red";
+                MessageText = "There was an error!";
             }
         }
 
@@ -167,12 +167,14 @@ namespace SportsCentre.WPF.ViewModels
 
             if (!result)
             {
+                MessageForeground = "Red";
                 MessageText = "Can`t delete centre with courts";
                 return;
             }
 
             GetCentres();
 
+            MessageForeground = "Green";
             MessageText = "Centre deleted successfully!";
         }
 

@@ -7,6 +7,69 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Courts"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border Padding="20" BorderBrush="Black" Margin="10">
+            <StackPanel Grid.Column="0" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
+                               Foreground="{Binding MessageForeground}"
+                               FontSize="15"
+                               FontWeight="Bold"/>
+                    <StackPanel Margin="0 0 0 5" Grid.Row="1">
+                        <Label Content="Name"/>
+                        <TextBox Text="{Binding Name}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 5" Grid.Row="2">
+                        <Label Content="Description"/>
+                        <TextBox Text="{Binding Description}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 15" Grid.Row="3">
+                        <Label Content="Capacity"/>
+                        <TextBox Text="{Binding Capacity}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 15" Grid.Row="4">
+                        <Label Content="Centre"/>
+                        <ComboBox
+                          Grid.Row="5"
+                          ItemsSource="{Binding Centres}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Id"
+                          SelectedValue="{Binding SelectedCenterId}"
+                  />
+                    </StackPanel>
+                </Grid>
+                <Button Command="{Binding AddCommand}" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Left" Margin="0 20 0 0" Content="Add" />
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="1" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ListView  Margin="20" x:Name="itemsList" Grid.Row="0" ItemsSource="{Binding Courts}" >
+                    <ListView.View>
+                        <GridView >
+                            <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"  Width="100"/>
+                            <GridViewColumn Header="Centre Name" DisplayMemberBinding="{Binding Centre.Name}"  Width="100" />
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  Width="100" />
+                            <GridViewColumn Header="Capacity" DisplayMemberBinding="{Binding Capacity}"  Width="100" />
+                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"  Width="200" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button CommandParameter="{Binding ElementName=itemsList}" Command="{Binding DeleteCommand}" Margin="20" HorizontalAlignment="Left" Grid.Row="1" Style="{StaticResource ButtonDanger}" Content="Delete"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

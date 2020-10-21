@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace SportsCentre.Domain.Interfaces
 {
-    public interface ICentreService
+    public interface ICourtService
     {
-        List<Centre> GetAll();
-        Centre Get(int id);
-        Centre Add(Centre centre);
+        List<Court> GetAll();
+        Court Add(Court court);
         bool Delete(int id);
     }
 }

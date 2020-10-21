@@ -35,6 +35,7 @@ namespace SportsCentre.WPF
             IServiceCollection services = new ServiceCollection();
 
             services.AddSingleton<ICentreService, CentreService>();
+            services.AddSingleton<ICourtService, CourtService>();
 
             services.AddSingleton<ISportsCentreViewModelAbstractFactory, SportsCentreViewModelAbstractFactory>();
             services.AddSingleton<ISportsCentreViewModelFactory<CentresViewModel>, CentreViewModelFactory>();

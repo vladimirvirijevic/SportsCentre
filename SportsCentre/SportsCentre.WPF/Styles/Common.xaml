@@ -71,6 +71,12 @@
         <Setter Property="FontFamily" Value="Helvetica"/>
     </Style>
 
+    <Style TargetType="ComboBox">
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Helvetica"/>
+    </Style>
+
     <Style TargetType="Label">
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontFamily" Value="Helvetica"/>
