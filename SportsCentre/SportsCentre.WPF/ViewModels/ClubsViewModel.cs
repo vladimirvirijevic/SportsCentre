@@ -12,25 +12,54 @@ using System.Windows.Input;
 
 namespace SportsCentre.WPF.ViewModels
 {
-    public class TrainingsViewModel : ViewModelBase
+    public class ClubsViewModel : ViewModelBase
     {
         #region Private Properties
         private string messageText;
         private string messageForeground;
-        private DateTime? date;
-        private string description;
-        private int duration;
-        private ObservableCollection<Training> trainings = new ObservableCollection<Training>();
+        private DateTime? founded;
+        private string name;
+        private string country;
+        private string city;
+        private string sport;
+        private ObservableCollection<Club> clubs = new ObservableCollection<Club>();
         #endregion
 
         #region Public Getters and Setters
-        public string Description
+        public string Name
         {
-            get { return description; }
+            get { return name; }
             set
             {
-                description = value;
-                OnPropertyChanged("Description");
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+        public string Country
+        {
+            get { return country; }
+            set
+            {
+                country = value;
+                OnPropertyChanged("Country");
+            }
+        }
+        public string City
+        {
+            get { return city; }
+            set
+            {
+                city = value;
+                OnPropertyChanged("City");
+            }
+        }
+        public string Sport
+        {
+            get { return sport; }
+            set
+            {
+                sport = value;
+                OnPropertyChanged("Sport");
             }
         }
         public string MessageText
@@ -51,32 +80,23 @@ namespace SportsCentre.WPF.ViewModels
                 OnPropertyChanged("MessageForeground");
             }
         }
-        public DateTime? Date
+        public DateTime? Founded
         {
-            get { return date; }
+            get { return founded; }
             set
             {
-                date = value;
-                OnPropertyChanged("Date");
-            }
-        }
-        public int Duration
-        {
-            get { return duration; }
-            set
-            {
-                duration = value;
-                OnPropertyChanged("Duration");
+                founded = value;
+                OnPropertyChanged("Founded");
             }
         }
 
-        public ObservableCollection<Training> Trainings
+        public ObservableCollection<Club> Clubs
         {
-            get { return trainings; }
+            get { return clubs; }
             set
             {
-                trainings = value;
-                OnPropertyChanged("Trainings");
+                clubs = value;
+                OnPropertyChanged("Clubs");
             }
         }
         #endregion
@@ -86,54 +106,55 @@ namespace SportsCentre.WPF.ViewModels
         public ICommand DeleteCommand { get; set; }
         #endregion
 
-        public TrainingsViewModel()
+        public ClubsViewModel()
         {
-            Date = null;
-            Duration = 0;
-            MessageText = "";
-            Description = "";
+            Founded = null;
+            Name = "";
+            Country = "";
+            City = "";
+            Sport = "";
 
             AddCommand = new RelayCommand(new Action<object>(Add));
             DeleteCommand = new RelayCommand(new Action<object>(Delete));
 
-            GetTrainings();
+            GetClubs();
         }
 
         private void Add(object obj)
         {
-            if (Date == null || Description == "" || Duration == 0)
+            if (Founded == null || Name == "" || Country == "" || City == "" || Sport == "")
             {
                 MessageForeground = "Red";
                 MessageText = "All fields are required!";
                 return;
             }
 
-            var time = Date.Value.TimeOfDay.ToString().Split(':');
-            string selectedTime = time[0] + ":" + time[1];
-
             try
             {
                 using (var context = new SportsCentreDbContext())
                 {
-                    var entity = new Training
+                    var entity = new Club
                     {
-                        Date = Date.Value.Date.ToShortDateString(),
-                        Time = selectedTime,
-                        Duration = Duration,
-                        Description = Description
+                        Founded = Founded.Value.Date.ToShortDateString(),
+                        Name = Name,
+                        Country = Country,
+                        City = City,
+                        Sport = Sport
                     };
 
-                    context.Trainings.Add(entity);
+                    context.Clubs.Add(entity);
                     context.SaveChanges();
                 }
 
-                Date = null;
-                Duration = 0;
-                Description = "";
+                Founded = null;
+                Name = "";
+                Country = "";
+                City = "";
+                Sport = "";
 
                 MessageForeground = "Green";
-                MessageText = "Training Successfully Added!";
-                GetTrainings();
+                MessageText = "Club Successfully Added!";
+                GetClubs();
             }
             catch (Exception ex)
             {
@@ -141,17 +162,17 @@ namespace SportsCentre.WPF.ViewModels
                 MessageText = "There was an error!";
             }
         }
-        private void GetTrainings()
+        private void GetClubs()
         {
-            trainings.Clear();
+            clubs.Clear();
 
-            List<Training> itemList = new List<Training>();
+            List<Club> itemList = new List<Club>();
             using (var context = new SportsCentreDbContext())
             {
-                itemList = context.Trainings.ToList();
+                itemList = context.Clubs.ToList();
             }
 
-            itemList.ForEach(x => trainings.Add(x));
+            itemList.ForEach(x => clubs.Add(x));
         }
 
         private void Delete(object obj)
@@ -164,28 +185,28 @@ namespace SportsCentre.WPF.ViewModels
                 return;
             }
 
-            int id = ((Training)gridView.SelectedItems[0]).Id;
+            int id = ((Club)gridView.SelectedItems[0]).Id;
 
             try
             {
                 using (var context = new SportsCentreDbContext())
                 {
-                    var training = context.Trainings.Find(id);
-                    context.Trainings.Remove(training);
+                    var club = context.Clubs.Find(id);
+                    context.Clubs.Remove(club);
                     context.SaveChanges();
                 }
             }
             catch (Exception ex)
             {
                 MessageForeground = "Red";
-                MessageText = "Can`t delete training";
+                MessageText = "Can`t delete club";
                 return;
             }
 
-            GetTrainings();
+            GetClubs();
 
             MessageForeground = "Green";
-            MessageText = "Training deleted successfully!";
+            MessageText = "Club deleted successfully!";
         }
     }
 }

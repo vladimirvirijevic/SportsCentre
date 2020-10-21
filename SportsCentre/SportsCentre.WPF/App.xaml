@@ -23,6 +23,15 @@
             <DataTemplate DataType="{x:Type viewModels:TrainingsViewModel}">
                 <views:Trainings />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ClubsViewModel}">
+                <views:ClubsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:PlayersViewModel}">
+                <views:PlayersView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CoachesViewModel}">
+                <views:CoachesView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

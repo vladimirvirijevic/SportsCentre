@@ -1,9 +1,12 @@
-﻿using SportsCentre.Domain.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using SportsCentre.Data;
+using SportsCentre.Domain.Interfaces;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,8 +16,6 @@ namespace SportsCentre.WPF.ViewModels
     public class CourtsViewModel : ViewModelBase
     {
         #region Private Properties
-        private readonly ICourtService _courtService;
-        private readonly ICentreService _centreService;
         private string messageText;
         private string messageForeground;
         private string name;
@@ -117,11 +118,8 @@ namespace SportsCentre.WPF.ViewModels
         public ICommand DeleteCommand { get; set; }
         #endregion
 
-        public CourtsViewModel(ICourtService courtService, ICentreService centreService)
+        public CourtsViewModel()
         {
-            _courtService = courtService;
-            _centreService = centreService;
-
             Name = "";
             Description = "";
             Capacity = 0;
@@ -144,17 +142,22 @@ namespace SportsCentre.WPF.ViewModels
                 return;
             }
 
-            var entity = new Court
-            {
-                Name = Name,
-                Description = Description,
-                Capacity = Capacity,
-                Centre = _centreService.Get(SelectedCenterId)
-            };
-
             try
             {
-                _courtService.Add(entity);
+                using (var context = new SportsCentreDbContext())
+                {
+                    var entity = new Court
+                    {
+                        Name = Name,
+                        Description = Description,
+                        Capacity = Capacity,
+                        Centre = context.Centres.Find(SelectedCenterId)
+                    };
+
+                    context.Courts.Add(entity);
+                    context.SaveChanges();
+                }
+                
                 Name = "";
                 Description = "";
                 Capacity = 0;
@@ -172,7 +175,12 @@ namespace SportsCentre.WPF.ViewModels
         private void GetCourts()
         {
             courts.Clear();
-            var itemList = _courtService.GetAll();
+
+            List<Court> itemList = new List<Court>();
+            using (var context = new SportsCentreDbContext())
+            {
+                itemList = context.Courts.Include(x => x.Centre).ToList();
+            }
 
             itemList.ForEach(x => courts.Add(x));
         }
@@ -180,7 +188,12 @@ namespace SportsCentre.WPF.ViewModels
         private void GetCentres()
         {
             centres.Clear();
-            var itemList = _centreService.GetAll();
+
+            List<Centre> itemList = new List<Centre>();
+            using (var context = new SportsCentreDbContext())
+            {
+                itemList = context.Centres.ToList();
+            }
 
             itemList.ForEach(x => centres.Add(x));
         }
@@ -198,9 +211,16 @@ namespace SportsCentre.WPF.ViewModels
 
             int id = ((Court)gridView.SelectedItems[0]).Id;
 
-            bool result = _courtService.Delete(id);
-
-            if (!result)
+            try
+            {
+                using (var context = new SportsCentreDbContext())
+                {
+                    var court = context.Courts.Find(id);
+                    context.Courts.Remove(court);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
             {
                 MessageForeground = "Red";
                 MessageText = "Can`t delete court with activity";

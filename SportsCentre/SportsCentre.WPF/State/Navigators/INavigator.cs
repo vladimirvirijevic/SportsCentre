@@ -11,7 +11,10 @@ namespace SportsCentre.WPF.State.Navigators
         Centres,
         Courts,
         Matches,
-        Trainings
+        Trainings,
+        Clubs,
+        Coaches,
+        Players
     }
 
     public interface INavigator

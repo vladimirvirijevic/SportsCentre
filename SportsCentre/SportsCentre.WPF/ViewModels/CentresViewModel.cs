@@ -1,9 +1,11 @@
-﻿using SportsCentre.Domain.Interfaces;
+﻿using SportsCentre.Data;
+using SportsCentre.Domain.Interfaces;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -15,7 +17,6 @@ namespace SportsCentre.WPF.ViewModels
     public class CentresViewModel : ViewModelBase
     {
         #region Private Properties
-        private readonly ICentreService _centreService;
         private string messageText;
         private string messageForeground;
         private string name;
@@ -99,10 +100,8 @@ namespace SportsCentre.WPF.ViewModels
 
 
 
-        public CentresViewModel(ICentreService centreService)
+        public CentresViewModel()
         {
-            _centreService = centreService;
-
             AddCenterCommand = new RelayCommand(new Action<object>(AddCentre));
             DeleteCentreCommand = new RelayCommand(new Action<object>(DeleteCentre));
             MessageText = "";
@@ -134,7 +133,12 @@ namespace SportsCentre.WPF.ViewModels
 
             try
             {
-                _centreService.Add(center);
+                using (var context = new SportsCentreDbContext())
+                {
+                    context.Centres.Add(center);
+                    context.SaveChanges();
+                }
+
                 Country = "";
                 City = "";
                 Address = "";
@@ -163,9 +167,16 @@ namespace SportsCentre.WPF.ViewModels
 
             int id = ((Centre)gridView.SelectedItems[0]).Id;
 
-            bool result = _centreService.Delete(id);
-
-            if (!result)
+            try
+            {
+                using (var context = new SportsCentreDbContext())
+                {
+                    var centre = context.Centres.Find(id);
+                    context.Centres.Remove(centre);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
             {
                 MessageForeground = "Red";
                 MessageText = "Can`t delete centre with courts";
@@ -181,7 +192,11 @@ namespace SportsCentre.WPF.ViewModels
         private void GetCentres()
         {
             centres.Clear();
-            var centersList = _centreService.GetAll();
+            List<Centre> centersList = new List<Centre>();
+            using (var context = new SportsCentreDbContext())
+            {
+                centersList = context.Centres.ToList();
+            }
 
             centersList.ForEach(c => centres.Add(c));
         }

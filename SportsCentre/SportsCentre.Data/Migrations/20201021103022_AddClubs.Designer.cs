@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCentre.Data;
 
 namespace SportsCentre.Data.Migrations
 {
     [DbContext(typeof(SportsCentreDbContext))]
-    partial class SportsCentreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201021103022_AddClubs")]
+    partial class AddClubs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,31 +61,6 @@ namespace SportsCentre.Data.Migrations
                     b.ToTable("Clubs");
                 });
 
-            modelBuilder.Entity("SportsCentre.Domain.Models.Coach", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Birthdate");
-
-                    b.Property<int?>("ClubId");
-
-                    b.Property<string>("Firstname");
-
-                    b.Property<string>("Lastname");
-
-                    b.Property<string>("Position");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClubId");
-
-                    b.ToTable("Coaches");
-                });
-
             modelBuilder.Entity("SportsCentre.Domain.Models.Court", b =>
                 {
                     b.Property<int>("Id")
@@ -124,29 +101,6 @@ namespace SportsCentre.Data.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("SportsCentre.Domain.Models.Player", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Birthdate");
-
-                    b.Property<int?>("ClubId");
-
-                    b.Property<string>("Firstname");
-
-                    b.Property<string>("Lastname");
-
-                    b.Property<string>("Position");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClubId");
-
-                    b.ToTable("Players");
-                });
-
             modelBuilder.Entity("SportsCentre.Domain.Models.Training", b =>
                 {
                     b.Property<int>("Id")
@@ -185,25 +139,11 @@ namespace SportsCentre.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SportsCentre.Domain.Models.Coach", b =>
-                {
-                    b.HasOne("SportsCentre.Domain.Models.Club", "Club")
-                        .WithMany()
-                        .HasForeignKey("ClubId");
-                });
-
             modelBuilder.Entity("SportsCentre.Domain.Models.Court", b =>
                 {
                     b.HasOne("SportsCentre.Domain.Models.Centre", "Centre")
                         .WithMany("Courts")
                         .HasForeignKey("CentreId");
-                });
-
-            modelBuilder.Entity("SportsCentre.Domain.Models.Player", b =>
-                {
-                    b.HasOne("SportsCentre.Domain.Models.Club", "Club")
-                        .WithMany("Players")
-                        .HasForeignKey("ClubId");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SportsCentre.Services;
 using SportsCentre.Domain.Interfaces;
 using SportsCentre.WPF.ViewModels;
 using System;
@@ -11,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.State.Navigators;
-using SportsCentre.WPF.ViewModels.Factories;
 
 namespace SportsCentre.WPF
 {
@@ -33,17 +31,6 @@ namespace SportsCentre.WPF
         private IServiceProvider CreateServiceProvider()
         {
             IServiceCollection services = new ServiceCollection();
-
-            services.AddSingleton<ICentreService, CentreService>();
-            services.AddSingleton<ICourtService, CourtService>();
-            services.AddSingleton<IMatchService, MatchService>();
-            services.AddSingleton<ITrainingService, TrainingService>();
-
-            services.AddSingleton<ISportsCentreViewModelAbstractFactory, SportsCentreViewModelAbstractFactory>();
-            services.AddSingleton<ISportsCentreViewModelFactory<CentresViewModel>, CentreViewModelFactory>();
-            services.AddSingleton<ISportsCentreViewModelFactory<CourtsViewModel>, CourtsViewModelFactory>(); 
-            services.AddSingleton<ISportsCentreViewModelFactory<MatchesViewModel>, MatchesViewModelFactory>(); 
-            services.AddSingleton<ISportsCentreViewModelFactory<TrainingsViewModel>, TrainingsViewModelFactory>(); 
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<MainViewModel>();

@@ -1,6 +1,5 @@
 ﻿using SportsCentre.WPF.State.Navigators;
 using SportsCentre.WPF.ViewModels;
-using SportsCentre.WPF.ViewModels.Factories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,12 +12,18 @@ namespace SportsCentre.WPF.Commands
         public event EventHandler CanExecuteChanged;
 
         private readonly INavigator _navigator;
-        private readonly ISportsCentreViewModelAbstractFactory _viewModelFactory;
+        //private readonly ISportsCentreViewModelAbstractFactory _viewModelFactory;
 
+        /*
         public UpdateCurrentViewModelCommand(INavigator navigator, ISportsCentreViewModelAbstractFactory viewModelFactory)
         {
             _navigator = navigator;
             _viewModelFactory = viewModelFactory;
+        }
+        */
+        public UpdateCurrentViewModelCommand(INavigator navigator)
+        {
+            _navigator = navigator;
         }
 
         public bool CanExecute(object parameter)
@@ -32,7 +37,29 @@ namespace SportsCentre.WPF.Commands
             {
                 ViewType viewType = (ViewType)parameter;
 
-                _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
+                switch (viewType)
+                {
+                    case ViewType.Centres:
+                        _navigator.CurrentViewModel = new CentresViewModel();
+                        break;
+                    case ViewType.Courts:
+                        _navigator.CurrentViewModel = new CourtsViewModel();
+                        break;
+                    case ViewType.Matches:
+                        _navigator.CurrentViewModel = new MatchesViewModel();
+                        break;
+                    case ViewType.Trainings:
+                        _navigator.CurrentViewModel = new TrainingsViewModel();
+                        break;
+                    case ViewType.Clubs:
+                        _navigator.CurrentViewModel = new ClubsViewModel();
+                        break;
+                    case ViewType.Players:
+                        _navigator.CurrentViewModel = new PlayersViewModel();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

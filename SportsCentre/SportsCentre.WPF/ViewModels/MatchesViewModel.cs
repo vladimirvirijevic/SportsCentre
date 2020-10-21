@@ -1,9 +1,11 @@
-﻿using SportsCentre.Domain.Interfaces;
+﻿using SportsCentre.Data;
+using SportsCentre.Domain.Interfaces;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,7 +15,6 @@ namespace SportsCentre.WPF.ViewModels
     public class MatchesViewModel : ViewModelBase
     {
         #region Private Properties
-        private readonly IMatchService _matchService;
         private string messageText;
         private string messageForeground;
         private DateTime? date;
@@ -96,10 +97,8 @@ namespace SportsCentre.WPF.ViewModels
         public ICommand DeleteCommand { get; set; }
         #endregion
 
-        public MatchesViewModel(IMatchService matchService)
+        public MatchesViewModel()
         {
-            _matchService = matchService;
-
             Date = null;
             Duration = 0;
             MessageText = "";
@@ -126,17 +125,22 @@ namespace SportsCentre.WPF.ViewModels
             var time = Date.Value.TimeOfDay.ToString().Split(':');
             string selectedTime = time[0] + ":" + time[1];
 
-            var entity = new Match
-            {
-                Date = Date.Value.Date.ToShortDateString(),
-                Time = selectedTime,
-                Duration = Duration,
-                Type = SelectedType
-            };
-
             try
             {
-                _matchService.Add(entity);
+                using (var context = new SportsCentreDbContext())
+                {
+                    var entity = new Match
+                    {
+                        Date = Date.Value.Date.ToShortDateString(),
+                        Time = selectedTime,
+                        Duration = Duration,
+                        Type = SelectedType
+                    };
+
+                    context.Matches.Add(entity);
+                    context.SaveChanges();
+                }
+
                 Date = null;
                 Duration = 0;
 
@@ -153,19 +157,15 @@ namespace SportsCentre.WPF.ViewModels
         private void GetMatches()
         {
             matches.Clear();
-            var itemList = _matchService.GetAll();
+
+            List<Match> itemList = new List<Match>();
+            using (var context = new SportsCentreDbContext())
+            {
+                itemList = context.Matches.ToList();
+            }
 
             itemList.ForEach(x => matches.Add(x));
         }
-
-        private void GetCentres()
-        {
-            matches.Clear();
-            var itemList = _matchService.GetAll();
-
-            itemList.ForEach(x => matches.Add(x));
-        }
-
 
         private void Delete(object obj)
         {
@@ -179,9 +179,16 @@ namespace SportsCentre.WPF.ViewModels
 
             int id = ((Match)gridView.SelectedItems[0]).Id;
 
-            bool result = _matchService.Delete(id);
-
-            if (!result)
+            try
+            {
+                using (var context = new SportsCentreDbContext())
+                {
+                    var match = context.Matches.Find(id);
+                    context.Matches.Remove(match);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
             {
                 MessageForeground = "Red";
                 MessageText = "Can`t delete match";

@@ -9,12 +9,10 @@ namespace SportsCentre.WPF.ViewModels
     public class MainViewModel : ViewModelBase
     {
         public INavigator Navigator { get; set; }
-        private readonly ICentreService _centreService;
 
-        public MainViewModel(INavigator navigator, ICentreService centreService)
+        public MainViewModel(INavigator navigator)
         {
             Navigator = navigator;
-            _centreService = centreService;
 
             Navigator.UpdateCurrentViewModelCommand.Execute(ViewType.Centres);
         }
