@@ -7,8 +7,6 @@ namespace SportsCentre.WPF.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
-        
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {

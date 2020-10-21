@@ -9,7 +9,9 @@ namespace SportsCentre.WPF.State.Navigators
     public enum ViewType
     {
         Centres,
-        Courts
+        Courts,
+        Matches,
+        Trainings
     }
 
     public interface INavigator

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SportsCentre.Application\SportsCentre.Application.csproj" />
     <ProjectReference Include="..\SportsCentre.Domain\SportsCentre.Domain.csproj" />
   </ItemGroup>

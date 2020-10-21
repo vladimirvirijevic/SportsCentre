@@ -24,14 +24,22 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <RadioButton Grid.Column="1" Content="Sports Centre" 
-                         
                          Command="{Binding UpdateCurrentViewModelCommand}" 
                          CommandParameter="{x:Static nav:ViewType.Centres}"/>
-            <RadioButton Grid.Column="2" Content="Courts" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static nav:ViewType.Courts}"/>
+            <RadioButton Grid.Column="2" Content="Courts" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Courts}"/>
+            <RadioButton Grid.Column="3" Content="Matches" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Matches}"/>
+            <RadioButton Grid.Column="4" Content="Trainings" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Trainings}"/>
         </Grid>
     </Grid>
 </UserControl>

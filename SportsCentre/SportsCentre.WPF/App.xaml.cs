@@ -36,10 +36,14 @@ namespace SportsCentre.WPF
 
             services.AddSingleton<ICentreService, CentreService>();
             services.AddSingleton<ICourtService, CourtService>();
+            services.AddSingleton<IMatchService, MatchService>();
+            services.AddSingleton<ITrainingService, TrainingService>();
 
             services.AddSingleton<ISportsCentreViewModelAbstractFactory, SportsCentreViewModelAbstractFactory>();
             services.AddSingleton<ISportsCentreViewModelFactory<CentresViewModel>, CentreViewModelFactory>();
             services.AddSingleton<ISportsCentreViewModelFactory<CourtsViewModel>, CourtsViewModelFactory>(); 
+            services.AddSingleton<ISportsCentreViewModelFactory<MatchesViewModel>, MatchesViewModelFactory>(); 
+            services.AddSingleton<ISportsCentreViewModelFactory<TrainingsViewModel>, TrainingsViewModelFactory>(); 
 
             services.AddScoped<INavigator, Navigator>();
             services.AddScoped<MainViewModel>();

@@ -17,6 +17,12 @@
             <DataTemplate DataType="{x:Type viewModels:CourtsViewModel}">
                 <views:Courts />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:MatchesViewModel}">
+                <views:Matches />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:TrainingsViewModel}">
+                <views:Trainings />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

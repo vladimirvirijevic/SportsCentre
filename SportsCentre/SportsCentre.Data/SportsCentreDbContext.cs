@@ -11,6 +11,8 @@ namespace SportsCentre.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Centre> Centres { get; set; }
         public DbSet<Court> Courts { get; set; }
+        public DbSet<Match> Matches { get; set; }
+        public DbSet<Training> Trainings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
