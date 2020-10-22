@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCentre.Data;
 
 namespace SportsCentre.Data.Migrations
 {
     [DbContext(typeof(SportsCentreDbContext))]
-    partial class SportsCentreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201022134825_AddTickets")]
+    partial class AddTickets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,7 +182,7 @@ namespace SportsCentre.Data.Migrations
 
                     b.Property<double>("Price");
 
-                    b.Property<int>("SeatNumber");
+                    b.Property<double>("SeatNumber");
 
                     b.HasKey("Id");
 

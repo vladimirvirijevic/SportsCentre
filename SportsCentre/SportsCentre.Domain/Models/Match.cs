@@ -8,5 +8,7 @@ namespace SportsCentre.Domain.Models
 
         public int FirstClubId { get; set; }
         public int SecondClubId { get; set; }
+
+        public List<Ticket> Tickets { get; set; }
     }
 }

@@ -35,6 +35,9 @@
             <DataTemplate DataType="{x:Type viewModels:PermitsViewModel}">
                 <views:PermitsView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:TicketsViewModel}">
+                <views:TicketsView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
