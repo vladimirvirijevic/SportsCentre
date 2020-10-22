@@ -16,7 +16,14 @@ namespace SportsCentre.Data
         public DbSet<Club> Clubs { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Coach> Coaches { get; set; }
-        public object Training { get; set; }
+        public DbSet<TrainingPlayer> TrainingPlayers { get; set; }
+        public DbSet<Permit> Permits { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TrainingPlayer>()
+                .HasKey(tp => new { tp.TrainingId, tp.PlayerId });
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCentre.Data;
 
 namespace SportsCentre.Data.Migrations
 {
     [DbContext(typeof(SportsCentreDbContext))]
-    partial class SportsCentreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201022084437_AddTrainingPlayers")]
+    partial class AddTrainingPlayers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,21 +134,6 @@ namespace SportsCentre.Data.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("SportsCentre.Domain.Models.Permit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("TrainingId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TrainingId");
-
-                    b.ToTable("Permits");
-                });
-
             modelBuilder.Entity("SportsCentre.Domain.Models.Player", b =>
                 {
                     b.Property<int>("Id")
@@ -240,13 +227,6 @@ namespace SportsCentre.Data.Migrations
                     b.HasOne("SportsCentre.Domain.Models.Centre", "Centre")
                         .WithMany("Courts")
                         .HasForeignKey("CentreId");
-                });
-
-            modelBuilder.Entity("SportsCentre.Domain.Models.Permit", b =>
-                {
-                    b.HasOne("SportsCentre.Domain.Models.Training", "Training")
-                        .WithMany("Permits")
-                        .HasForeignKey("TrainingId");
                 });
 
             modelBuilder.Entity("SportsCentre.Domain.Models.Player", b =>

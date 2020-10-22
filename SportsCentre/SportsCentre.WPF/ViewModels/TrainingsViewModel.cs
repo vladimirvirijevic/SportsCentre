@@ -2,6 +2,7 @@
 using SportsCentre.Domain.Interfaces;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
+using SportsCentre.WPF.Controls.CheckboxList;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,9 +22,32 @@ namespace SportsCentre.WPF.ViewModels
         private string description;
         private int duration;
         private ObservableCollection<Training> trainings = new ObservableCollection<Training>();
+        private ObservableCollection<Player> players = new ObservableCollection<Player>();
+
+        private CheckableObservableCollection<string> items = new CheckableObservableCollection<string>();
+        private CheckableObservableCollection<Player> itemsPlayers = new CheckableObservableCollection<Player>();
         #endregion
 
         #region Public Getters and Setters
+        public CheckableObservableCollection<string> Items
+        {
+            get { return items; }
+            set
+            {
+                items = value;
+                OnPropertyChanged("Items");
+            }
+        }
+
+        public CheckableObservableCollection<Player> ItemsPlayers
+        {
+            get { return itemsPlayers; }
+            set
+            {
+                itemsPlayers = value;
+                OnPropertyChanged("ItemsPlayers");
+            }
+        }
         public string Description
         {
             get { return description; }
@@ -96,6 +120,9 @@ namespace SportsCentre.WPF.ViewModels
             AddCommand = new RelayCommand(new Action<object>(Add));
             DeleteCommand = new RelayCommand(new Action<object>(Delete));
 
+            ItemsPlayers = new CheckableObservableCollection<Player>();
+
+            GetPlayers();
             GetTrainings();
         }
 
@@ -106,6 +133,23 @@ namespace SportsCentre.WPF.ViewModels
                 MessageForeground = "Red";
                 MessageText = "All fields are required!";
                 return;
+            }
+
+            // Selected Playes
+            var list = (ListBox)obj;
+
+            var items = list.Items.SourceCollection;
+
+            List<int> playerIds = new List<int>();
+
+            foreach (var item in items)
+            {
+                CheckWrapper<Player> checkItem = (CheckWrapper<Player>)item;
+
+                if (checkItem.IsChecked)
+                {
+                    playerIds.Add(checkItem.Value.Id);
+                }
             }
 
             var time = Date.Value.TimeOfDay.ToString().Split(':');
@@ -125,6 +169,18 @@ namespace SportsCentre.WPF.ViewModels
 
                     context.Trainings.Add(entity);
                     context.SaveChanges();
+
+                    foreach (int playerId in playerIds)
+                    {
+                        TrainingPlayer trainingPlayer = new TrainingPlayer
+                        {
+                            TrainingId = entity.Id,
+                            PlayerId = playerId
+                        };
+
+                        context.TrainingPlayers.Add(trainingPlayer);
+                        context.SaveChanges();
+                    }
                 }
 
                 Date = null;
@@ -152,6 +208,23 @@ namespace SportsCentre.WPF.ViewModels
             }
 
             itemList.ForEach(x => trainings.Add(x));
+        }
+
+        private void GetPlayers()
+        {
+            players.Clear();
+            itemsPlayers.Clear();
+
+            List<Player> itemList = new List<Player>();
+            using (var context = new SportsCentreDbContext())
+            {
+                itemList = context.Players.ToList();
+            }
+
+            itemList.ForEach(x => {
+                players.Add(x);
+                itemsPlayers.Add(x);
+            });
         }
 
         private void Delete(object obj)

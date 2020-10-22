@@ -6,5 +6,7 @@ namespace SportsCentre.Domain.Models
     {
         public string Position { get; set; }
         public Club Club { get; set; }
+
+        public List<TrainingPlayer> TrainingPlayers { get; set; }
     }
 }

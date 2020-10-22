@@ -21,6 +21,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
@@ -38,8 +39,23 @@
                         <Label Content="Description"/>
                         <TextBox Text="{Binding Description}"/>
                     </StackPanel>
+                    <StackPanel Margin="0 0 0 15" Grid.Row="4">
+                        <Label Content="Players"/>
+                        <ListBox  Height="120" Name="listPlayers" ItemsSource="{Binding ItemsPlayers}" SelectionMode="Extended">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <CheckBox Name="check" IsChecked="{Binding IsChecked, Mode=TwoWay}" Margin="3" VerticalAlignment="Center" />
+                                        <ContentPresenter Content="{Binding Value.Id}" Margin="1"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
                 </Grid>
-                <Button Command="{Binding AddCommand}" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Left" Margin="0 20 0 0" Content="Add" />
+                <Button 
+                    CommandParameter="{Binding ElementName=listPlayers}"
+                    Command="{Binding AddCommand}" Style="{StaticResource ButtonPrimary}" HorizontalAlignment="Left" Margin="0 20 0 0" Content="Add" />
             </StackPanel>
         </Border>
         <Border Grid.Column="1" Padding="20">

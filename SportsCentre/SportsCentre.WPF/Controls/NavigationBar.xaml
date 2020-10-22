@@ -28,6 +28,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -52,6 +53,9 @@
             <RadioButton Grid.Column="7" Content="Coaches" 
                          Command="{Binding UpdateCurrentViewModelCommand}" 
                          CommandParameter="{x:Static nav:ViewType.Coaches}"/>
+            <RadioButton Grid.Column="8" Content="Permits" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Permits}"/>
         </Grid>
     </Grid>
 </UserControl>
