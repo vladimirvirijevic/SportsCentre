@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCentre.Data;
 
 namespace SportsCentre.Data.Migrations
 {
     [DbContext(typeof(SportsCentreDbContext))]
-    partial class SportsCentreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201022142331_ChangeMembersTableName")]
+    partial class ChangeMembersTableName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,21 +111,6 @@ namespace SportsCentre.Data.Migrations
                     b.ToTable("Courts");
                 });
 
-            modelBuilder.Entity("SportsCentre.Domain.Models.Guest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Firstname");
-
-                    b.Property<string>("Lastname");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Guests");
-                });
-
             modelBuilder.Entity("SportsCentre.Domain.Models.Match", b =>
                 {
                     b.Property<int>("Id")
@@ -216,9 +203,9 @@ namespace SportsCentre.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("GuestId");
-
                     b.Property<int?>("MatchId");
+
+                    b.Property<int?>("MemberId");
 
                     b.Property<double>("Price");
 
@@ -226,9 +213,9 @@ namespace SportsCentre.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GuestId");
-
                     b.HasIndex("MatchId");
+
+                    b.HasIndex("MemberId");
 
                     b.ToTable("Tickets");
                 });
@@ -308,7 +295,7 @@ namespace SportsCentre.Data.Migrations
             modelBuilder.Entity("SportsCentre.Domain.Models.Permit", b =>
                 {
                     b.HasOne("SportsCentre.Domain.Models.Member", "Member")
-                        .WithMany("Permits")
+                        .WithMany()
                         .HasForeignKey("MemberId");
 
                     b.HasOne("SportsCentre.Domain.Models.Training", "Training")
@@ -325,13 +312,13 @@ namespace SportsCentre.Data.Migrations
 
             modelBuilder.Entity("SportsCentre.Domain.Models.Ticket", b =>
                 {
-                    b.HasOne("SportsCentre.Domain.Models.Guest", "Guest")
-                        .WithMany("Tickets")
-                        .HasForeignKey("GuestId");
-
                     b.HasOne("SportsCentre.Domain.Models.Match", "Match")
                         .WithMany("Tickets")
                         .HasForeignKey("MatchId");
+
+                    b.HasOne("SportsCentre.Domain.Models.Member")
+                        .WithMany("Tickets")
+                        .HasForeignKey("MemberId");
                 });
 
             modelBuilder.Entity("SportsCentre.Domain.Models.TrainingPlayer", b =>

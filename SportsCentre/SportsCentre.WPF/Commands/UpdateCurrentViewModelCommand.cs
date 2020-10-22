@@ -58,6 +58,12 @@ namespace SportsCentre.WPF.Commands
                     case ViewType.Tickets:
                         _navigator.CurrentViewModel = new TicketsViewModel();
                         break;
+                    case ViewType.Members:
+                        _navigator.CurrentViewModel = new MembersViewModel();
+                        break;
+                    case ViewType.Guests:
+                        _navigator.CurrentViewModel = new GuestsViewModel();
+                        break;
                     default:
                         break;
                 }

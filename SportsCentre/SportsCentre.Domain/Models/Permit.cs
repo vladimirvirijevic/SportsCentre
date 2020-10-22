@@ -6,5 +6,7 @@ namespace SportsCentre.Domain.Models
     {
         public int Id { get; set; }
         public Training Training { get; set; }
+
+        public Member Member{ get; set; }
     }
 }

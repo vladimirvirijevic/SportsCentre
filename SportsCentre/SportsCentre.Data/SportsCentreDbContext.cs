@@ -19,6 +19,8 @@ namespace SportsCentre.Data
         public DbSet<TrainingPlayer> TrainingPlayers { get; set; }
         public DbSet<Permit> Permits { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<Guest> Guests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

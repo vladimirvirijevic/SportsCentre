@@ -16,7 +16,9 @@ namespace SportsCentre.WPF.State.Navigators
         Coaches,
         Players,
         Permits,
-        Tickets
+        Tickets,
+        Members,
+        Guests
     }
 
     public interface INavigator

@@ -11,5 +11,6 @@ namespace SportsCentre.Domain.Models
         public int SeatNumber { get; set; }
 
         public Match Match { get; set; }
+        public Guest Guest { get; set; }
     }
 }
