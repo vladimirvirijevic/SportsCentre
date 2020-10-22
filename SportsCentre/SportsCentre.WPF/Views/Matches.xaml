@@ -21,6 +21,8 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
@@ -35,6 +37,22 @@
                         <TextBox Text="{Binding Duration}"/>
                     </StackPanel>
                     <StackPanel Margin="0 0 0 15" Grid.Row="3">
+                        <Label Content="First Club"/>
+                        <ComboBox
+                            ItemsSource="{Binding Clubs}"
+                            DisplayMemberPath="Name"
+                            SelectedValuePath="Id"
+                            SelectedValue="{Binding SelectedClubId1}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 15" Grid.Row="4">
+                        <Label Content="Second Club"/>
+                        <ComboBox
+                            ItemsSource="{Binding Clubs}"
+                            DisplayMemberPath="Name"
+                            SelectedValuePath="Id"
+                            SelectedValue="{Binding SelectedClubId2}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 15" Grid.Row="5">
                         <Label Content="Type"/>
                         <ComboBox
                           ItemsSource="{Binding Types}"
@@ -50,10 +68,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <ListView  Margin="20" x:Name="itemsList" Grid.Row="0" ItemsSource="{Binding Matches}" >
+                <ListView  Margin="20" x:Name="itemsList" Grid.Row="0" ItemsSource="{Binding MatchesInfo}" >
                     <ListView.View>
                         <GridView >
                             <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"  Width="40"/>
+                            <GridViewColumn Header="First Club" DisplayMemberBinding="{Binding FirstClub.Name}"  Width="40"/>
+                            <GridViewColumn Header="Second Club" DisplayMemberBinding="{Binding SecondClub.Name}"  Width="40"/>
                             <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"  Width="100" />
                             <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}"  Width="100" />
                             <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Duration}"  Width="100" />

@@ -20,7 +20,11 @@ namespace SportsCentre.WPF.ViewModels
         private DateTime? date;
         private string selectedType;
         private int duration;
+        private int selectedClubId1;
+        private int selectedClubId2;
         private ObservableCollection<Match> matches = new ObservableCollection<Match>();
+        private ObservableCollection<MatchInfo> matchesInfo = new ObservableCollection<MatchInfo>();
+        private ObservableCollection<Club> clubs = new ObservableCollection<Club>();
         private ObservableCollection<string> types = new ObservableCollection<string>();
         #endregion
 
@@ -71,6 +75,36 @@ namespace SportsCentre.WPF.ViewModels
             }
         }
 
+        public int SelectedClubId1
+        {
+            get { return selectedClubId1; }
+            set
+            {
+                selectedClubId1 = value;
+                OnPropertyChanged("SelectedClubId1");
+            }
+        }
+
+        public int SelectedClubId2
+        {
+            get { return selectedClubId2; }
+            set
+            {
+                selectedClubId2 = value;
+                OnPropertyChanged("SelectedClubId2");
+            }
+        }
+
+        public ObservableCollection<MatchInfo> MatchesInfo
+        {
+            get { return matchesInfo; }
+            set
+            {
+                matchesInfo = value;
+                OnPropertyChanged("MatchesInfo");
+            }
+        }
+
         public ObservableCollection<Match> Matches
         {
             get { return matches; }
@@ -78,6 +112,16 @@ namespace SportsCentre.WPF.ViewModels
             {
                 matches = value;
                 OnPropertyChanged("Matches");
+            }
+        }
+
+        public ObservableCollection<Club> Clubs
+        {
+            get { return clubs; }
+            set
+            {
+                clubs = value;
+                OnPropertyChanged("Clubs");
             }
         }
 
@@ -103,6 +147,8 @@ namespace SportsCentre.WPF.ViewModels
             Duration = 0;
             MessageText = "";
             SelectedType = "";
+            SelectedClubId1 = -1;
+            SelectedClubId2 = -1;
 
             AddCommand = new RelayCommand(new Action<object>(Add));
             DeleteCommand = new RelayCommand(new Action<object>(Delete));
@@ -110,12 +156,13 @@ namespace SportsCentre.WPF.ViewModels
             types.Add("Friendly");
             types.Add("Regular");
 
+            GetClubs();
             GetMatches();
         }
 
         private void Add(object obj)
         {
-            if (Date == null || SelectedType == "" || Duration == 0)
+            if (Date == null || SelectedType == "" || Duration == 0 || SelectedClubId1 == -1 || SelectedClubId2 == -1)
             {
                 MessageForeground = "Red";
                 MessageText = "All fields are required!";
@@ -134,7 +181,9 @@ namespace SportsCentre.WPF.ViewModels
                         Date = Date.Value.Date.ToShortDateString(),
                         Time = selectedTime,
                         Duration = Duration,
-                        Type = SelectedType
+                        Type = SelectedType,
+                        FirstClubId = SelectedClubId1,
+                        SecondClubId = SelectedClubId2
                     };
 
                     context.Matches.Add(entity);
@@ -143,6 +192,8 @@ namespace SportsCentre.WPF.ViewModels
 
                 Date = null;
                 Duration = 0;
+                SelectedClubId1 = -1;
+                SelectedClubId2 = -1;
 
                 MessageForeground = "Green";
                 MessageText = "Match Successfully Added!";
@@ -157,14 +208,45 @@ namespace SportsCentre.WPF.ViewModels
         private void GetMatches()
         {
             matches.Clear();
+            matchesInfo.Clear();
 
             List<Match> itemList = new List<Match>();
+            List<MatchInfo> matchList = new List<MatchInfo>();
+
             using (var context = new SportsCentreDbContext())
             {
                 itemList = context.Matches.ToList();
+
+                foreach (Match m in itemList)
+                {
+                    matches.Add(m);
+
+                    var firstClub = context.Clubs.Find(m.FirstClubId);
+                    var secondClub = context.Clubs.Find(m.SecondClubId);
+
+                    if (firstClub != null && secondClub != null)
+                    {
+                        var matchInfo = new MatchInfo(m);
+                        matchInfo.FirstClub = firstClub;
+                        matchInfo.SecondClub = secondClub;
+
+                        matchesInfo.Add(matchInfo);
+                    }
+                }
+            }
+        }
+
+        private void GetClubs()
+        {
+            clubs.Clear();
+
+            List<Club> itemList = new List<Club>();
+            using (var context = new SportsCentreDbContext())
+            {
+                itemList = context.Clubs.ToList();
             }
 
-            itemList.ForEach(x => matches.Add(x));
+            itemList.ForEach(x => clubs.Add(x));
         }
 
         private void Delete(object obj)

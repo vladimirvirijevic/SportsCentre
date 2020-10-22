@@ -12,15 +12,7 @@ namespace SportsCentre.WPF.Commands
         public event EventHandler CanExecuteChanged;
 
         private readonly INavigator _navigator;
-        //private readonly ISportsCentreViewModelAbstractFactory _viewModelFactory;
 
-        /*
-        public UpdateCurrentViewModelCommand(INavigator navigator, ISportsCentreViewModelAbstractFactory viewModelFactory)
-        {
-            _navigator = navigator;
-            _viewModelFactory = viewModelFactory;
-        }
-        */
         public UpdateCurrentViewModelCommand(INavigator navigator)
         {
             _navigator = navigator;
@@ -56,6 +48,9 @@ namespace SportsCentre.WPF.Commands
                         break;
                     case ViewType.Players:
                         _navigator.CurrentViewModel = new PlayersViewModel();
+                        break;
+                    case ViewType.Coaches:
+                        _navigator.CurrentViewModel = new CoachesViewModel();
                         break;
                     default:
                         break;

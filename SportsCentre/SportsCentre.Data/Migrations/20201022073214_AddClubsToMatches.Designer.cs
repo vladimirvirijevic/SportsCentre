@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCentre.Data;
 
 namespace SportsCentre.Data.Migrations
 {
     [DbContext(typeof(SportsCentreDbContext))]
-    partial class SportsCentreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201022073214_AddClubsToMatches")]
+    partial class AddClubsToMatches
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,8 +48,6 @@ namespace SportsCentre.Data.Migrations
 
                     b.Property<string>("City");
 
-                    b.Property<int?>("ClubId");
-
                     b.Property<string>("Country");
 
                     b.Property<string>("Founded");
@@ -57,8 +57,6 @@ namespace SportsCentre.Data.Migrations
                     b.Property<string>("Sport");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClubId");
 
                     b.ToTable("Clubs");
                 });
@@ -115,19 +113,19 @@ namespace SportsCentre.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ClubId");
+
                     b.Property<string>("Date");
 
                     b.Property<int>("Duration");
-
-                    b.Property<int>("FirstClubId");
-
-                    b.Property<int>("SecondClubId");
 
                     b.Property<string>("Time");
 
                     b.Property<string>("Type");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClubId");
 
                     b.ToTable("Matches");
                 });
@@ -193,13 +191,6 @@ namespace SportsCentre.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SportsCentre.Domain.Models.Club", b =>
-                {
-                    b.HasOne("SportsCentre.Domain.Models.Club")
-                        .WithMany("Clubs")
-                        .HasForeignKey("ClubId");
-                });
-
             modelBuilder.Entity("SportsCentre.Domain.Models.Coach", b =>
                 {
                     b.HasOne("SportsCentre.Domain.Models.Club", "Club")
@@ -212,6 +203,13 @@ namespace SportsCentre.Data.Migrations
                     b.HasOne("SportsCentre.Domain.Models.Centre", "Centre")
                         .WithMany("Courts")
                         .HasForeignKey("CentreId");
+                });
+
+            modelBuilder.Entity("SportsCentre.Domain.Models.Match", b =>
+                {
+                    b.HasOne("SportsCentre.Domain.Models.Club", "Club")
+                        .WithMany("Matches")
+                        .HasForeignKey("ClubId");
                 });
 
             modelBuilder.Entity("SportsCentre.Domain.Models.Player", b =>

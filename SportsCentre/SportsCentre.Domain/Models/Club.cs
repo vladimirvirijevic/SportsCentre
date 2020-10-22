@@ -12,5 +12,6 @@ namespace SportsCentre.Domain.Models
         public string Founded { get; set; }
 
         public List<Player> Players { get; set; }
+        public List<Club> Clubs { get; set; }
     }
 }
