@@ -18,7 +18,8 @@ namespace SportsCentre.WPF.State.Navigators
         Permits,
         Tickets,
         Members,
-        Guests
+        Guests,
+        SellTicket
     }
 
     public interface INavigator

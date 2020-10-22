@@ -44,6 +44,9 @@
             <DataTemplate DataType="{x:Type viewModels:GuestsViewModel}">
                 <views:GuestsView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:SellTicketViewModel}">
+                <views:SellTicketView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -31,6 +31,8 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -67,6 +69,9 @@
             <RadioButton Grid.Column="11" Content="Guests" 
                          Command="{Binding UpdateCurrentViewModelCommand}" 
                          CommandParameter="{x:Static nav:ViewType.Guests}"/>
+            <RadioButton Grid.Column="12" Content="Sell Ticket" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.SellTicket}"/>
         </Grid>
     </Grid>
 </UserControl>
