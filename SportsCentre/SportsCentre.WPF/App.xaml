@@ -47,6 +47,12 @@
             <DataTemplate DataType="{x:Type viewModels:SellTicketViewModel}">
                 <views:SellTicketView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
+                <views:LoginView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:UsersViewModel}">
+                <views:UsersViewModel />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
