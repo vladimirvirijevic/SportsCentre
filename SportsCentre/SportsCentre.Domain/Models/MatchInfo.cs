@@ -16,6 +16,7 @@ namespace SportsCentre.Domain.Models
             Time = match.Time;
             Duration = match.Duration;
             Type = match.Type;
+            Court = match.Court;
         }
     }
 }

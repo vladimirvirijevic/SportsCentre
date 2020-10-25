@@ -23,20 +23,31 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock TextAlignment="Center" Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
                                FontSize="15"
                                FontWeight="Bold"/>
-                    <StackPanel Margin="0 0 0 5" Grid.Row="1">
+                    <StackPanel Margin="0 0 0 15" Grid.Row="1">
+                        <Label Content="Court"/>
+                        <ComboBox
+                          Grid.Row="5"
+                          ItemsSource="{Binding Courts}"
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Id"
+                          SelectedValue="{Binding SelectedCourtId}"
+                  />
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 5" Grid.Row="2">
                         <Label Content="Date and time"/>
                         <toolkit:DateTimePicker Padding="5" FontFamily="Hevetica" FontSize="14"  Value="{Binding Date}"/>
                     </StackPanel>
-                    <StackPanel Margin="0 0 0 15" Grid.Row="2">
+                    <StackPanel Margin="0 0 0 15" Grid.Row="3">
                         <Label Content="Duration (minutes)"/>
                         <TextBox Text="{Binding Duration}"/>
                     </StackPanel>
-                    <StackPanel Margin="0 0 0 15" Grid.Row="3">
+                    <StackPanel Margin="0 0 0 15" Grid.Row="4">
                         <Label Content="First Club"/>
                         <ComboBox
                             ItemsSource="{Binding Clubs}"
@@ -44,7 +55,7 @@
                             SelectedValuePath="Id"
                             SelectedValue="{Binding SelectedClubId1}"/>
                     </StackPanel>
-                    <StackPanel Margin="0 0 0 15" Grid.Row="4">
+                    <StackPanel Margin="0 0 0 15" Grid.Row="5">
                         <Label Content="Second Club"/>
                         <ComboBox
                             ItemsSource="{Binding Clubs}"
@@ -52,7 +63,7 @@
                             SelectedValuePath="Id"
                             SelectedValue="{Binding SelectedClubId2}"/>
                     </StackPanel>
-                    <StackPanel Margin="0 0 0 15" Grid.Row="5">
+                    <StackPanel Margin="0 0 0 15" Grid.Row="6">
                         <Label Content="Type"/>
                         <ComboBox
                           ItemsSource="{Binding Types}"
@@ -72,6 +83,7 @@
                     <ListView.View>
                         <GridView >
                             <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"  Width="40"/>
+                            <GridViewColumn Header="Court" DisplayMemberBinding="{Binding Court.Name}"  Width="100"/>
                             <GridViewColumn Header="First Club" DisplayMemberBinding="{Binding FirstClub.Name}"  Width="150"/>
                             <GridViewColumn Header="Second Club" DisplayMemberBinding="{Binding SecondClub.Name}"  Width="150"/>
                             <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"  Width="100" />

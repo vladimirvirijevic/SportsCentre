@@ -23,8 +23,10 @@ namespace SportsCentre.WPF.ViewModels
         private DateTime? date;
         private string description;
         private int duration;
+        private int selectedCourtId;
         private ObservableCollection<Training> trainings = new ObservableCollection<Training>();
         private ObservableCollection<Player> players = new ObservableCollection<Player>();
+        private ObservableCollection<Court> courts = new ObservableCollection<Court>();
 
         private CheckableObservableCollection<string> items = new CheckableObservableCollection<string>();
         private CheckableObservableCollection<PlayerInfo> itemsPlayersInfo = new CheckableObservableCollection<PlayerInfo>();
@@ -96,6 +98,16 @@ namespace SportsCentre.WPF.ViewModels
             }
         }
 
+        public int SelectedCourtId
+        {
+            get { return selectedCourtId; }
+            set
+            {
+                selectedCourtId = value;
+                OnPropertyChanged("SelectedCourtId");
+            }
+        }
+
         public ObservableCollection<Training> Trainings
         {
             get { return trainings; }
@@ -103,6 +115,16 @@ namespace SportsCentre.WPF.ViewModels
             {
                 trainings = value;
                 OnPropertyChanged("Trainings");
+            }
+        }
+
+        public ObservableCollection<Court> Courts
+        {
+            get { return courts; }
+            set
+            {
+                courts = value;
+                OnPropertyChanged("Courts");
             }
         }
         #endregion
@@ -118,6 +140,7 @@ namespace SportsCentre.WPF.ViewModels
             Duration = 0;
             MessageText = "";
             Description = "";
+            SelectedCourtId = -1;
 
             AddCommand = new RelayCommand(new Action<object>(Add));
             DeleteCommand = new RelayCommand(new Action<object>(Delete));
@@ -126,11 +149,12 @@ namespace SportsCentre.WPF.ViewModels
 
             GetPlayers();
             GetTrainings();
+            GetCourts();
         }
 
         private void Add(object obj)
         {
-            if (Date == null || Description == "" || Duration == 0)
+            if (Date == null || Description == "" || Duration == 0 || SelectedCourtId == -1)
             {
                 MessageForeground = "Red";
                 MessageText = "All fields are required!";
@@ -161,12 +185,15 @@ namespace SportsCentre.WPF.ViewModels
             {
                 using (var context = new SportsCentreDbContext())
                 {
+                    var court = context.Courts.Find(SelectedCourtId);
+
                     var entity = new Training
                     {
                         Date = Date.Value.Date.ToShortDateString(),
                         Time = selectedTime,
                         Duration = Duration,
-                        Description = Description
+                        Description = Description,
+                        Court = court   
                     };
 
                     context.Trainings.Add(entity);
@@ -206,10 +233,23 @@ namespace SportsCentre.WPF.ViewModels
             List<Training> itemList = new List<Training>();
             using (var context = new SportsCentreDbContext())
             {
-                itemList = context.Trainings.ToList();
+                itemList = context.Trainings.Include(x => x.Court).ToList();
             }
 
             itemList.ForEach(x => trainings.Add(x));
+        }
+
+        private void GetCourts()
+        {
+            courts.Clear();
+
+            List<Court> itemList = new List<Court>();
+            using (var context = new SportsCentreDbContext())
+            {
+                itemList = context.Courts.ToList();
+            }
+
+            itemList.ForEach(x => courts.Add(x));
         }
 
         private void GetPlayers()

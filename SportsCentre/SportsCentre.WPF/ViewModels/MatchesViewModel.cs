@@ -1,4 +1,5 @@
-﻿using SportsCentre.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SportsCentre.Data;
 using SportsCentre.Domain.Interfaces;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
@@ -22,13 +23,34 @@ namespace SportsCentre.WPF.ViewModels
         private int duration;
         private int selectedClubId1;
         private int selectedClubId2;
+        private int selectedCourtId;
         private ObservableCollection<Match> matches = new ObservableCollection<Match>();
         private ObservableCollection<MatchInfo> matchesInfo = new ObservableCollection<MatchInfo>();
+        private ObservableCollection<Court> courts = new ObservableCollection<Court>();
         private ObservableCollection<Club> clubs = new ObservableCollection<Club>();
         private ObservableCollection<string> types = new ObservableCollection<string>();
         #endregion
 
         #region Public Getters and Setters
+        public int SelectedCourtId
+        {
+            get { return selectedCourtId; }
+            set
+            {
+                selectedCourtId = value;
+                OnPropertyChanged("SelectedCourtId");
+            }
+        }
+
+        public ObservableCollection<Court> Courts
+        {
+            get { return courts; }
+            set
+            {
+                courts = value;
+                OnPropertyChanged("Courts");
+            }
+        }
         public string SelectedType
         {
             get { return selectedType; }
@@ -149,6 +171,7 @@ namespace SportsCentre.WPF.ViewModels
             SelectedType = "";
             SelectedClubId1 = -1;
             SelectedClubId2 = -1;
+            SelectedCourtId = -1;
 
             AddCommand = new RelayCommand(new Action<object>(Add));
             DeleteCommand = new RelayCommand(new Action<object>(Delete));
@@ -158,11 +181,12 @@ namespace SportsCentre.WPF.ViewModels
 
             GetClubs();
             GetMatches();
+            GetCourts();
         }
 
         private void Add(object obj)
         {
-            if (Date == null || SelectedType == "" || Duration == 0 || SelectedClubId1 == -1 || SelectedClubId2 == -1)
+            if (Date == null || SelectedType == "" || Duration == 0 || SelectedClubId1 == -1 || SelectedClubId2 == -1 || SelectedCourtId == -1)
             {
                 MessageForeground = "Red";
                 MessageText = "All fields are required!";
@@ -176,6 +200,8 @@ namespace SportsCentre.WPF.ViewModels
             {
                 using (var context = new SportsCentreDbContext())
                 {
+                    var court = context.Courts.Find(SelectedCourtId);
+
                     var entity = new Match
                     {
                         Date = Date.Value.Date.ToShortDateString(),
@@ -183,7 +209,8 @@ namespace SportsCentre.WPF.ViewModels
                         Duration = Duration,
                         Type = SelectedType,
                         FirstClubId = SelectedClubId1,
-                        SecondClubId = SelectedClubId2
+                        SecondClubId = SelectedClubId2,
+                        Court = court
                     };
 
                     context.Matches.Add(entity);
@@ -205,6 +232,19 @@ namespace SportsCentre.WPF.ViewModels
                 MessageText = "There was an error!";
             }
         }
+        private void GetCourts()
+        {
+            courts.Clear();
+
+            List<Court> itemList = new List<Court>();
+            using (var context = new SportsCentreDbContext())
+            {
+                itemList = context.Courts.ToList();
+            }
+
+            itemList.ForEach(x => courts.Add(x));
+        }
+
         private void GetMatches()
         {
             matches.Clear();
@@ -215,7 +255,7 @@ namespace SportsCentre.WPF.ViewModels
 
             using (var context = new SportsCentreDbContext())
             {
-                itemList = context.Matches.ToList();
+                itemList = context.Matches.Include(x => x.Court).ToList();
 
                 foreach (Match m in itemList)
                 {
