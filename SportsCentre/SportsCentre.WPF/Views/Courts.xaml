@@ -21,7 +21,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
+                    <TextBlock TextAlignment="Center" Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
                                FontSize="15"
                                FontWeight="Bold"/>
@@ -60,9 +60,9 @@
                 <ListView  Margin="20" x:Name="itemsList" Grid.Row="0" ItemsSource="{Binding Courts}" >
                     <ListView.View>
                         <GridView >
-                            <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"  Width="100"/>
+                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"  Width="40"/>
                             <GridViewColumn Header="Centre Name" DisplayMemberBinding="{Binding Centre.Name}"  Width="100" />
-                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  Width="100" />
+                            <GridViewColumn Header="Court Name" DisplayMemberBinding="{Binding Name}"  Width="100" />
                             <GridViewColumn Header="Capacity" DisplayMemberBinding="{Binding Capacity}"  Width="100" />
                             <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}"  Width="200" />
                         </GridView>

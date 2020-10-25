@@ -10,5 +10,6 @@ namespace SportsCentre.Domain.Models
         public string Date { get; set; }
         public string Time { get; set; }
         public int Duration { get; set; }
+        public Court Court { get; set; }
     }
 }

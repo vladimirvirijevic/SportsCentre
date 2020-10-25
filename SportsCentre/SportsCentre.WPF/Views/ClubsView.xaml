@@ -22,17 +22,17 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
+                    <TextBlock TextAlignment="Center" Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
                                FontSize="15"
                                FontWeight="Bold"/>
-                    <StackPanel Margin="0 0 0 5" Grid.Row="1">
-                        <Label Content="Date and time"/>
-                        <DatePicker Padding="5" FontFamily="Hevetica" FontSize="14"  SelectedDate="{Binding Founded}"/>
-                    </StackPanel>
-                    <StackPanel Margin="0 0 0 15" Grid.Row="2">
+                    <StackPanel Margin="0 0 0 15" Grid.Row="1">
                         <Label Content="Name"/>
                         <TextBox Text="{Binding Name}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0 0 0 5" Grid.Row="2">
+                        <Label Content="Founded"/>
+                        <DatePicker Padding="5" FontFamily="Hevetica" FontSize="14"  SelectedDate="{Binding Founded}"/>
                     </StackPanel>
                     <StackPanel Margin="0 0 0 15" Grid.Row="3">
                         <Label Content="Country"/>
@@ -64,7 +64,7 @@
                             <GridViewColumn Header="Country" DisplayMemberBinding="{Binding Country}"  Width="100" />
                             <GridViewColumn Header="City" DisplayMemberBinding="{Binding City}"  Width="100" />
                             <GridViewColumn Header="Sport" DisplayMemberBinding="{Binding Sport}"  Width="100" />
-                            <GridViewColumn Header="Founded" DisplayMemberBinding="{Binding Founded}"  Width="100" />
+                            <GridViewColumn Header="Founded" DisplayMemberBinding="{Binding Founded}"  Width="200" />
                         </GridView>
                     </ListView.View>
                 </ListView>

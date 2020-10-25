@@ -11,26 +11,31 @@
     <Window.DataContext>
         <vm:LoginViewModel/>
     </Window.DataContext>
-    <Grid Width="300" Margin="0 100 0 0">
+    
+    <Grid Width="300" HorizontalAlignment="Center" Height="350">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
+        <StackPanel Grid.Row="0">
+            <TextBlock Margin="0 0 0 20" Text="Sports Centre" HorizontalAlignment="Center" FontSize="35"/>
+        </StackPanel>
+        <TextBlock TextAlignment="Center" Name="messageText" Grid.Row="1" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
                                FontSize="15"
                                FontWeight="Bold"/>
-        <StackPanel Margin="0 0 0 15" Grid.Row="1">
+        <StackPanel Margin="0 0 0 15" Grid.Row="2">
             <Label Content="Username"/>
             <TextBox Text="{Binding Username}"/>
         </StackPanel>
-        <StackPanel Margin="0 0 0 15" Grid.Row="2">
+        <StackPanel Margin="0 0 0 15" Grid.Row="3">
             <Label Content="Password"/>
             <PasswordBox x:Name="LoginPasswordBox" />
         </StackPanel>
-        <Button Grid.Row="3" Width="300"  
+        <Button Grid.Row="4" Width="300"  
                 Style="{StaticResource ButtonPrimary}" 
                 HorizontalAlignment="Left" 
                 Margin="0 20 0 0" 

@@ -10,5 +10,7 @@ namespace SportsCentre.Domain.Models
         public int Capacity { get; set; }
 
         public Centre Centre { get; set; }
+        public List<Match> Matches { get; set; }
+        public List<Training> Trainings { get; set; }
     }
 }

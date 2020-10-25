@@ -154,7 +154,7 @@ namespace SportsCentre.WPF.ViewModels
                 Phone = "";
 
                 MessageForeground = "Green";
-                MessageText = "Members Successfully Added!";
+                MessageText = "Member Successfully Added!";
                 GetMembers();
             }
             catch (Exception ex)

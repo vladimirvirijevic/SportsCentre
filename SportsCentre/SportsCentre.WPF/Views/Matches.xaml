@@ -24,7 +24,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
+                    <TextBlock TextAlignment="Center" Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
                                FontSize="15"
                                FontWeight="Bold"/>
@@ -72,8 +72,8 @@
                     <ListView.View>
                         <GridView >
                             <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"  Width="40"/>
-                            <GridViewColumn Header="First Club" DisplayMemberBinding="{Binding FirstClub.Name}"  Width="40"/>
-                            <GridViewColumn Header="Second Club" DisplayMemberBinding="{Binding SecondClub.Name}"  Width="40"/>
+                            <GridViewColumn Header="First Club" DisplayMemberBinding="{Binding FirstClub.Name}"  Width="150"/>
+                            <GridViewColumn Header="Second Club" DisplayMemberBinding="{Binding SecondClub.Name}"  Width="150"/>
                             <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"  Width="100" />
                             <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}"  Width="100" />
                             <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Duration}"  Width="100" />

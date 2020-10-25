@@ -1,8 +1,10 @@
-﻿using SportsCentre.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SportsCentre.Data;
 using SportsCentre.Domain.Interfaces;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
 using SportsCentre.WPF.Controls.CheckboxList;
+using SportsCentre.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +27,7 @@ namespace SportsCentre.WPF.ViewModels
         private ObservableCollection<Player> players = new ObservableCollection<Player>();
 
         private CheckableObservableCollection<string> items = new CheckableObservableCollection<string>();
-        private CheckableObservableCollection<Player> itemsPlayers = new CheckableObservableCollection<Player>();
+        private CheckableObservableCollection<PlayerInfo> itemsPlayersInfo = new CheckableObservableCollection<PlayerInfo>();
         #endregion
 
         #region Public Getters and Setters
@@ -39,13 +41,13 @@ namespace SportsCentre.WPF.ViewModels
             }
         }
 
-        public CheckableObservableCollection<Player> ItemsPlayers
+        public CheckableObservableCollection<PlayerInfo> ItemsPlayersInfo
         {
-            get { return itemsPlayers; }
+            get { return itemsPlayersInfo; }
             set
             {
-                itemsPlayers = value;
-                OnPropertyChanged("ItemsPlayers");
+                itemsPlayersInfo = value;
+                OnPropertyChanged("ItemsPlayersInfo");
             }
         }
         public string Description
@@ -120,7 +122,7 @@ namespace SportsCentre.WPF.ViewModels
             AddCommand = new RelayCommand(new Action<object>(Add));
             DeleteCommand = new RelayCommand(new Action<object>(Delete));
 
-            ItemsPlayers = new CheckableObservableCollection<Player>();
+            ItemsPlayersInfo = new CheckableObservableCollection<PlayerInfo>();
 
             GetPlayers();
             GetTrainings();
@@ -144,7 +146,7 @@ namespace SportsCentre.WPF.ViewModels
 
             foreach (var item in items)
             {
-                CheckWrapper<Player> checkItem = (CheckWrapper<Player>)item;
+                CheckWrapper<PlayerInfo> checkItem = (CheckWrapper<PlayerInfo>)item;
 
                 if (checkItem.IsChecked)
                 {
@@ -213,18 +215,23 @@ namespace SportsCentre.WPF.ViewModels
         private void GetPlayers()
         {
             players.Clear();
-            itemsPlayers.Clear();
+            itemsPlayersInfo.Clear();
 
             List<Player> itemList = new List<Player>();
             using (var context = new SportsCentreDbContext())
             {
-                itemList = context.Players.ToList();
+                itemList = context.Players.Include(x => x.Club).ToList();
             }
 
             itemList.ForEach(x => {
                 players.Add(x);
-                itemsPlayers.Add(x);
+
+                if (x.Club != null)
+                {
+                    itemsPlayersInfo.Add(new PlayerInfo(x));
+                }
             });
+
         }
 
         private void Delete(object obj)

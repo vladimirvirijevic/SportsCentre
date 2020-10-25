@@ -23,7 +23,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
+                    <TextBlock TextAlignment="Center" Name="messageText" Grid.Row="0" Text="{Binding MessageText}" 
                                Foreground="{Binding MessageForeground}"
                                FontSize="15"
                                FontWeight="Bold"/>
@@ -41,12 +41,12 @@
                     </StackPanel>
                     <StackPanel Margin="0 0 0 15" Grid.Row="4">
                         <Label Content="Players"/>
-                        <ListBox  Height="120" Name="listPlayers" ItemsSource="{Binding ItemsPlayers}" SelectionMode="Extended">
+                        <ListBox  Height="120" Name="listPlayers" ItemsSource="{Binding ItemsPlayersInfo}" SelectionMode="Extended">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <CheckBox Name="check" IsChecked="{Binding IsChecked, Mode=TwoWay}" Margin="3" VerticalAlignment="Center" />
-                                        <ContentPresenter Content="{Binding Value.Id}" Margin="1"/>
+                                        <ContentPresenter Content="{Binding Value.Info}" Margin="1"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

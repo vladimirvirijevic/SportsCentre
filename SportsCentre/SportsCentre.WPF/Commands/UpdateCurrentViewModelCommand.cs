@@ -67,9 +67,6 @@ namespace SportsCentre.WPF.Commands
                     case ViewType.SellTicket:
                         _navigator.CurrentViewModel = new SellTicketViewModel();
                         break;
-                    case ViewType.Login:
-                        _navigator.CurrentViewModel = new LoginViewModel();
-                        break;
                     case ViewType.Users:
                         _navigator.CurrentViewModel = new UsersViewModel();
                         break;

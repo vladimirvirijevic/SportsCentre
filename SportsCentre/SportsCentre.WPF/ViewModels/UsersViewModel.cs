@@ -133,6 +133,12 @@ namespace SportsCentre.WPF.ViewModels
 
         private void Add(object obj)
         {
+            if (obj != null)
+            {
+                PasswordBox passwordBox = (PasswordBox)obj;
+                Password = passwordBox.Password;
+            }
+
             if (Username == "" || Password == "" || Name == "" || SelectedRole == "")
             {
                 MessageForeground = "Red";

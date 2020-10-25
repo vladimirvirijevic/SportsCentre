@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportsCentre.Data;
 
 namespace SportsCentre.Data.Migrations
 {
     [DbContext(typeof(SportsCentreDbContext))]
-    partial class SportsCentreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201025153910_AddCourtsToActivities")]
+    partial class AddCourtsToActivities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
