@@ -2,9 +2,11 @@
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
 using SportsCentre.WPF.State.Authenticator;
+using SportsCentre.WPF.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -96,11 +98,43 @@ namespace SportsCentre.WPF.ViewModels
 
             try
             {
-                 User loggedUser = authenticator.Login(Username, Password);
+                User loggedUser = authenticator.Login(Username, password);
 
+                if (loggedUser == null)
+                {
+                    MessageForeground = "Red";
+                    MessageText = "Wrong creditentials!";
+                    return;
+                }
 
                 MessageForeground = "Green";
                 MessageText = "Login was successful!";
+
+                Window window = null;
+
+                if (loggedUser.Role == "Admin")
+                {
+                    window = new AdminView();
+                }
+                else if (loggedUser.Role == "Manager")
+                {
+                    window = new ManagerView();
+                }
+                else if (loggedUser.Role == "Sales")
+                {
+                    window = new SalesView();
+                }
+
+                if (window != null)
+                {
+                    window.Show();
+
+                    foreach (Window item in Application.Current.Windows)
+                    {
+                        if (item.DataContext == this) item.Close();
+                    }
+                }
+                
             }
             catch (Exception ex)
             {

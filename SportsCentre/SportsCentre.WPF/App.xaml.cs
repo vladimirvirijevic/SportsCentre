@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.State.Navigators;
+using SportsCentre.WPF.Views;
 
 namespace SportsCentre.WPF
 {
@@ -18,6 +19,18 @@ namespace SportsCentre.WPF
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            Window window = new MainWindow();
+            window.DataContext = new MainViewModel();
+            //window.Show();
+
+            Window loginWindow = new LoginWindow();
+            loginWindow.Show();
+
+            base.OnStartup(e);
+        }
+        /*
         protected override void OnStartup(StartupEventArgs e)
         {
             IServiceProvider serviceProvider = CreateServiceProvider();
@@ -39,5 +52,6 @@ namespace SportsCentre.WPF
 
             return services.BuildServiceProvider();
         }
+        */
     }
 }

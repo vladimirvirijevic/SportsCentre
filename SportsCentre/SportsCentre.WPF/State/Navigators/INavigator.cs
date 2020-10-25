@@ -28,5 +28,6 @@ namespace SportsCentre.WPF.State.Navigators
     {
         ViewModelBase CurrentViewModel { get; set; }
         ICommand UpdateCurrentViewModelCommand { get; }
+        ICommand LogoutCommand { get; }
     }
 }

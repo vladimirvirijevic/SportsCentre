@@ -22,5 +22,6 @@ namespace SportsCentre.WPF.State.Navigators
         }
 
         public ICommand UpdateCurrentViewModelCommand => new UpdateCurrentViewModelCommand(this);
+        public ICommand LogoutCommand => new LogoutCommand();
     }
 }
