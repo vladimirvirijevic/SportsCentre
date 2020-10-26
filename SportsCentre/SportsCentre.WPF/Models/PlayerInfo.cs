@@ -1,7 +1,4 @@
 ﻿using SportsCentre.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SportsCentre.WPF.Models
 {

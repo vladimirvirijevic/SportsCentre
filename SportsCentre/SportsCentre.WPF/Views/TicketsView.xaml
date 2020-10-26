@@ -28,8 +28,8 @@
                         <Label Content="Match"/>
                         <ComboBox
                           Grid.Row="5"
-                          ItemsSource="{Binding Matches}"
-                          DisplayMemberPath="Id"
+                          ItemsSource="{Binding MatchesInfo}"
+                          DisplayMemberPath="Info"
                           SelectedValuePath="Id"
                           SelectedValue="{Binding SelectedMatchId}"
                   />

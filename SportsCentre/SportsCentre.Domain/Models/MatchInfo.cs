@@ -8,6 +8,7 @@ namespace SportsCentre.Domain.Models
     {
         public Club FirstClub { get; set; }
         public Club SecondClub { get; set; }
+        public string Info { get; set; }
 
         public MatchInfo(Match match)
         {

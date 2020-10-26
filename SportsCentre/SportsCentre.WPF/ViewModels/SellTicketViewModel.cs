@@ -2,6 +2,7 @@
 using SportsCentre.Data;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
+using SportsCentre.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,8 +21,10 @@ namespace SportsCentre.WPF.ViewModels
         private string messageForeground;
 
         private ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
+        private ObservableCollection<TicketInfo> ticketsInfo = new ObservableCollection<TicketInfo>();
         private ObservableCollection<Ticket> ticketsToSell = new ObservableCollection<Ticket>();
         private ObservableCollection<Guest> guests = new ObservableCollection<Guest>();
+        private ObservableCollection<GuestInfo> guestsInfo = new ObservableCollection<GuestInfo>();
         #endregion
 
         #region Public Getters and Setters
@@ -74,6 +77,16 @@ namespace SportsCentre.WPF.ViewModels
             }
         }
 
+        public ObservableCollection<GuestInfo> GuestsInfo
+        {
+            get { return guestsInfo; }
+            set
+            {
+                guestsInfo = value;
+                OnPropertyChanged("GuestsInfo");
+            }
+        }
+
 
         public ObservableCollection<Ticket> Tickets
         {
@@ -82,6 +95,16 @@ namespace SportsCentre.WPF.ViewModels
             {
                 tickets = value;
                 OnPropertyChanged("Tickets");
+            }
+        }
+
+        public ObservableCollection<TicketInfo> TicketsInfo
+        {
+            get { return ticketsInfo; }
+            set
+            {
+                ticketsInfo = value;
+                OnPropertyChanged("TicketsInfo");
             }
         }
 
@@ -155,6 +178,7 @@ namespace SportsCentre.WPF.ViewModels
         private void GetTickets()
         {
             tickets.Clear();
+            
 
             List<Ticket> itemList = new List<Ticket>();
             using (var context = new SportsCentreDbContext())
@@ -162,25 +186,46 @@ namespace SportsCentre.WPF.ViewModels
                 itemList = context.Tickets.Include(x => x.Guest).Include(x => x.Match).ToList();
             }
 
-            itemList.ForEach(x => tickets.Add(x));
+            itemList.ForEach(x => {
+                tickets.Add(x);
+               
+            });
         }
 
         private void GetSellTickets()
         {
             ticketsToSell.Clear();
+            ticketsInfo.Clear();
 
             List<Ticket> itemList = new List<Ticket>();
             using (var context = new SportsCentreDbContext())
             {
-                itemList = context.Tickets.Include(x => x.Guest).Where(x => x.Guest == null).ToList();
-            }
+                itemList = context.Tickets
+                    .Include(x => x.Match)
+                    .Include(x => x.Guest)
+                    .Where(x => x.Guest == null)
+                    .ToList();
 
-            itemList.ForEach(x => ticketsToSell.Add(x));
+                foreach (var ticket in itemList)
+                {
+                    ticketsToSell.Add(ticket);
+
+                    var ticketInfo = new TicketInfo(ticket);
+
+                    var firstClub = context.Clubs.Find(ticket.Match.FirstClubId);
+                    var secondClub = context.Clubs.Find(ticket.Match.SecondClubId);
+
+                    ticketInfo.Info = $"Ticket Id: {ticketInfo.Id}, {firstClub.Name} - {secondClub.Name}";
+
+                    ticketsInfo.Add(ticketInfo);
+                }
+            }
         }
 
         private void GetGuests()
         {
             guests.Clear();
+            guestsInfo.Clear();
 
             List<Guest> itemList = new List<Guest>();
             using (var context = new SportsCentreDbContext())
@@ -188,7 +233,10 @@ namespace SportsCentre.WPF.ViewModels
                 itemList = context.Guests.ToList();
             }
 
-            itemList.ForEach(x => guests.Add(x));
+            itemList.ForEach(x => {
+                guests.Add(x);
+                guestsInfo.Add(new GuestInfo(x));
+            });
         }
     }
 }

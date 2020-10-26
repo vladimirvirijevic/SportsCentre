@@ -26,8 +26,8 @@
                         <Label Content="Training"/>
                         <ComboBox
                           Grid.Row="5"
-                          ItemsSource="{Binding Trainings}"
-                          DisplayMemberPath="Id"
+                          ItemsSource="{Binding TrainingInfos}"
+                          DisplayMemberPath="Info"
                           SelectedValuePath="Id"
                           SelectedValue="{Binding SelectedTrainingId}"
                   />
@@ -45,7 +45,7 @@
                 <ListView  Margin="20" x:Name="itemsList" Grid.Row="0" ItemsSource="{Binding Permits}" >
                     <ListView.View>
                         <GridView >
-                            <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"  Width="100"/>
+                            <GridViewColumn Header="Permit Id" DisplayMemberBinding="{Binding Id}"  Width="100"/>
                             <GridViewColumn Header="Training Id" DisplayMemberBinding="{Binding Training.Id}"  Width="100" />
                         </GridView>
                     </ListView.View>

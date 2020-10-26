@@ -2,6 +2,7 @@
 using SportsCentre.Data;
 using SportsCentre.Domain.Models;
 using SportsCentre.WPF.Commands;
+using SportsCentre.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,7 @@ namespace SportsCentre.WPF.ViewModels
 
         private ObservableCollection<Permit> permits = new ObservableCollection<Permit>();
         private ObservableCollection<Training> trainings = new ObservableCollection<Training>();
+        private ObservableCollection<TrainingInfo> trainingInfos = new ObservableCollection<TrainingInfo>();
         #endregion
 
         #region Public Getters and Setters
@@ -69,6 +71,16 @@ namespace SportsCentre.WPF.ViewModels
             {
                 trainings = value;
                 OnPropertyChanged("Trainings");
+            }
+        }
+
+        public ObservableCollection<TrainingInfo> TrainingInfos
+        {
+            get { return trainingInfos; }
+            set
+            {
+                trainingInfos = value;
+                OnPropertyChanged("TrainingInfos");
             }
         }
         #endregion
@@ -140,14 +152,22 @@ namespace SportsCentre.WPF.ViewModels
         private void GetTrainings()
         {
             trainings.Clear();
+            trainingInfos.Clear();
 
             List<Training> itemList = new List<Training>();
             using (var context = new SportsCentreDbContext())
             {
-                itemList = context.Trainings.ToList();
+                itemList = context.Trainings.Include(x => x.Court).ToList();
             }
 
-            itemList.ForEach(x => trainings.Add(x));
+            itemList.ForEach(x =>
+            {
+                trainings.Add(x);
+                if (x.Court != null)
+                {
+                    trainingInfos.Add(new TrainingInfo(x));
+                }
+            });
         }
 
         private void Delete(object obj)

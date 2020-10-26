@@ -23,6 +23,7 @@ namespace SportsCentre.WPF.ViewModels
 
         private ObservableCollection<Ticket> tickets = new ObservableCollection<Ticket>();
         private ObservableCollection<Match> matches = new ObservableCollection<Match>();
+        private ObservableCollection<MatchInfo> matchesInfo = new ObservableCollection<MatchInfo>();
         #endregion
 
         #region Public Getters and Setters
@@ -33,6 +34,16 @@ namespace SportsCentre.WPF.ViewModels
             {
                 selectedMatchId = value;
                 OnPropertyChanged("SelectedMatchId");
+            }
+        }
+
+        public ObservableCollection<MatchInfo> MatchesInfo
+        {
+            get { return matchesInfo; }
+            set
+            {
+                matchesInfo = value;
+                OnPropertyChanged("MatchesInfo");
             }
         }
 
@@ -126,6 +137,19 @@ namespace SportsCentre.WPF.ViewModels
             {
                 using (var context = new SportsCentreDbContext())
                 {
+                    // Check if ticket already exists for selected match and seat
+                    var ticket = context.Tickets
+                            .Include(t => t.Match)
+                            .Where(t => t.Match.Id == SelectedMatchId && t.SeatNumber == SeatNumber)
+                            .FirstOrDefault();
+
+                    if (ticket != null)
+                    {
+                        MessageForeground = "Red";
+                        MessageText = "Ticket already exists!";
+                        return;
+                    }
+
                     Match match = context.Matches.Find(SelectedMatchId);
 
                     var entity = new Ticket
@@ -170,14 +194,33 @@ namespace SportsCentre.WPF.ViewModels
         private void GetMatches()
         {
             matches.Clear();
+            matchesInfo.Clear();
 
             List<Match> itemList = new List<Match>();
+            List<MatchInfo> matchList = new List<MatchInfo>();
+
             using (var context = new SportsCentreDbContext())
             {
-                itemList = context.Matches.ToList();
-            }
+                itemList = context.Matches.Include(x => x.Court).ToList();
 
-            itemList.ForEach(x => matches.Add(x));
+                foreach (Match m in itemList)
+                {
+                    matches.Add(m);
+
+                    var firstClub = context.Clubs.Find(m.FirstClubId);
+                    var secondClub = context.Clubs.Find(m.SecondClubId);
+
+                    if (firstClub != null && secondClub != null && m.Court != null)
+                    {
+                        var matchInfo = new MatchInfo(m);
+                        matchInfo.FirstClub = firstClub;
+                        matchInfo.SecondClub = secondClub;
+                        matchInfo.Info = $"Id: {matchInfo.Id}, {firstClub.Name} - {secondClub.Name}, Court: {m.Court.Name}";
+
+                        matchesInfo.Add(matchInfo);
+                    }
+                }
+            }
         }
 
         private void Delete(object obj)
