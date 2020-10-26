@@ -53,6 +53,9 @@
             <DataTemplate DataType="{x:Type viewModels:UsersViewModel}">
                 <views:UsersViewModel />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:GrantPermissionViewModel}">
+                <views:GrantPermissionView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -70,6 +70,9 @@ namespace SportsCentre.WPF.Commands
                     case ViewType.Users:
                         _navigator.CurrentViewModel = new UsersViewModel();
                         break;
+                    case ViewType.GrantPermission:
+                        _navigator.CurrentViewModel = new GrantPermissionViewModel();
+                        break;
                     default:
                         break;
                 }
