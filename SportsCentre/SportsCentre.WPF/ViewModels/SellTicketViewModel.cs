@@ -215,9 +215,12 @@ namespace SportsCentre.WPF.ViewModels
                     var firstClub = context.Clubs.Find(ticket.Match.FirstClubId);
                     var secondClub = context.Clubs.Find(ticket.Match.SecondClubId);
 
-                    ticketInfo.Info = $"Ticket Id: {ticketInfo.Id}, {firstClub.Name} - {secondClub.Name}";
+                    if (firstClub != null && secondClub != null)
+                    {
+                        ticketInfo.Info = $"Ticket Id: {ticketInfo.Id}, {firstClub.Name} - {secondClub.Name}";
 
-                    ticketsInfo.Add(ticketInfo);
+                        ticketsInfo.Add(ticketInfo);
+                    }
                 }
             }
         }

@@ -22,12 +22,67 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <RadioButton Grid.Column="0" Content="Users" 
                          Command="{Binding UpdateCurrentViewModelCommand}" 
                          CommandParameter="{x:Static nav:ViewType.Users}"/>
-            <RadioButton Grid.Column="1" Content="Logout" 
+            <RadioButton Grid.Column="1" Content="Sports Centre" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Centres}"/>
+            <RadioButton Grid.Column="2" Content="Courts" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Courts}"/>
+            <RadioButton Grid.Column="3" Content="Clubs" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Clubs}"/>
+            <RadioButton Grid.Column="4" Content="Players" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Players}"/>
+            <RadioButton Grid.Column="5" Content="Coaches" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Coaches}"/>
+            <RadioButton Grid.Column="6" Content="Matches" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Matches}"/>
+            <RadioButton Grid.Column="7" Content="Trainings" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Trainings}"/>
+            <RadioButton Grid.Column="8" Content="Members" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Members}"/>
+            <RadioButton Grid.Column="9" Content="Guests" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Guests}"/>
+            <RadioButton Grid.Column="10" Content="Permits" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Permits}"/>
+            <RadioButton Grid.Column="11" Content="Tickets" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Tickets}"/>
+            <RadioButton Grid.Column="12" Content="Sell Ticket" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.SellTicket}"/>
+            <RadioButton Grid.Column="13" Content="Grant Permission" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.GrantPermission}"/>
+            <RadioButton Grid.Column="14" Content="Logout" 
                          Command="{Binding LogoutCommand}"/>
         </Grid>
     </Grid>
