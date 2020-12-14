@@ -38,6 +38,8 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <RadioButton Grid.Column="0" Content="Users" 
@@ -82,7 +84,13 @@
             <RadioButton Grid.Column="13" Content="Grant Permission" 
                          Command="{Binding UpdateCurrentViewModelCommand}" 
                          CommandParameter="{x:Static nav:ViewType.GrantPermission}"/>
-            <RadioButton Grid.Column="14" Content="Logout" 
+            <RadioButton Grid.Column="14" Content="Calendar" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.Calendar}"/>
+            <RadioButton Grid.Column="15" Content="CalendarTest" 
+                         Command="{Binding UpdateCurrentViewModelCommand}" 
+                         CommandParameter="{x:Static nav:ViewType.CalendarTest}"/>
+            <RadioButton Grid.Column="16" Content="Logout" 
                          Command="{Binding LogoutCommand}"/>
         </Grid>
     </Grid>

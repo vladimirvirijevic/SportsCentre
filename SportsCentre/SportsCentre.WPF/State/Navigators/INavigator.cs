@@ -22,7 +22,9 @@ namespace SportsCentre.WPF.State.Navigators
         SellTicket,
         Login,
         Users,
-        GrantPermission
+        GrantPermission,
+        Calendar,
+        CalendarTest
     }
 
     public interface INavigator

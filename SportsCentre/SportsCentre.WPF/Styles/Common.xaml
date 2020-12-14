@@ -89,4 +89,18 @@
         <Setter Property="FontFamily" Value="Helvetica"/>
     </Style>
 
+    <Style x:Key="CalendarField" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Helvetica"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Padding" Value="0, 5"/>
+        <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    
+    <!-- Calendar -->
+    <Style x:Key="CalendarCell" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="PeachPuff"/>
+    </Style>
+
+
 </ResourceDictionary>

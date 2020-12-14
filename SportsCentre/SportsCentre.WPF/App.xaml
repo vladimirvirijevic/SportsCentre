@@ -56,6 +56,12 @@
             <DataTemplate DataType="{x:Type viewModels:GrantPermissionViewModel}">
                 <views:GrantPermissionView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CalendarViewModel}">
+                <views:CalendarView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:CalendarTestViewModel}">
+                <views:CalendarTestView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

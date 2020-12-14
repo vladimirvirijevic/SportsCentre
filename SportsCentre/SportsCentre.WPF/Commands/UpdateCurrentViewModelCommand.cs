@@ -73,6 +73,12 @@ namespace SportsCentre.WPF.Commands
                     case ViewType.GrantPermission:
                         _navigator.CurrentViewModel = new GrantPermissionViewModel();
                         break;
+                    case ViewType.Calendar:
+                        _navigator.CurrentViewModel = new CalendarViewModel();
+                        break;
+                    case ViewType.CalendarTest:
+                        _navigator.CurrentViewModel = new CalendarTestViewModel();
+                        break;
                     default:
                         break;
                 }
